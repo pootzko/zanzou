@@ -1,0 +1,123 @@
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	font-family: Tahoma, Geneva, sans-serif;
+	background-color: #f4f2e6;
+	margin: 0;
+	padding: 0;
+	font-size: 0.85em;
+	color: #4a4945; /* svjetlija: #313236 */
+}
+
+a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #da2f1b;
+}
+
+a:hover {
+	color: #c32918;
+}
+
+a:active {
+	color: #e75140;
+}
+
+h2 {
+	font-size: 1.8em;
+	margin-left: 14px;
+}
+div#header {
+	width: 980px;
+	height: auto;
+	margin: auto;
+	margin-bottom: 6px;
+}
+
+div#logo_holder {
+	position: relative;
+	height: 100px;
+	padding-top: 15px
+}
+
+div#header_kanji {
+	width: auto;
+	padding-left: 125px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	font-size: 6em;
+	font-weight: bold;
+}
+
+div#header_latin {
+	position: absolute;
+	bottom: 0;
+	left: 306px;
+	margin-bottom: 6px;
+	font-size: 1.6em;
+	font-weight: bold;
+}
+
+div#wrapper {
+	clear: both;
+	position: relative;
+	width: 980px;
+	min-height: 100%;
+	margin: auto;
+}
+
+div#main {
+
+}
+
+div#navigation {
+	width: 200px;
+	float: left;
+	font-size: 1.8em;
+	font-weight: bold;
+	text-align: right;
+}
+
+div#navigation ul {
+	margin: 70px 0 0;
+	padding: 10px 0;
+    list-style-type: none;
+}
+
+div#navigation li {
+	margin-bottom: 23px;
+	padding: 0 15px;
+}
+
+div#content_holder {
+	width: 760px;
+	float: right;
+}
+
+div#content {
+	margin-bottom: 50px;
+	padding: 0 10px;
+}
+
+div#footer {
+	clear: both;
+	width: auto;
+	height: 30px;
+	margin: 15px 0 0 10px;
+	font-size: 0.8em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
