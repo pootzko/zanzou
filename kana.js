@@ -1,3 +1,11 @@
+/*
+*
+*   first array value -> determines consonant prefix
+*   second array value -> determines the wovel
+*   third array value -> determines writing type (roumaji/hiragana/katakana)
+*
+*/
+
 var monograhps = [
 	[["a", "あ", "ア"], ["i", "い", "イ"], ["u", "う", "ウ"], ["e", "え", "エ"], ["o", "お", "オ"]],
 	[["ka", "か", "カ"], ["ki", "き", "キ"], ["ku", "く", "ク"], ["ke", "け", "ケ"], ["ko", "こ", "コ"]],
