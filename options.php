@@ -23,13 +23,17 @@ require 'navigation.php';
 
 <div id="content"> <!-- CONTENT -->
 	<h2>Options</h2>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 
-	<div id="kana_table">
-		<script type="text/javascript">
-			$("#kana_table").append(generateTable());
-		</script>
+	<div id="kana_table_holder">
+		<div id="kana_table">
+			<script type="text/javascript">
+				$("#kana_table").append(generateTable("hiragana", "monographs"));
+			</script>
+		</div>
 	</div>
+
 
 
 
