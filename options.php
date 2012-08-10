@@ -30,6 +30,13 @@ require 'navigation.php';
 		<div id="kana_table">
 			<script type="text/javascript">
 				$("#kana_table").append(generateTable("hiragana", "monographs"));
+				$("#kana_table").append(generateTable("katakana", "monographs"));
+				$("#kana_table").append(generateTable("hiragana", "digraphs"));
+				$("#kana_table").append(generateTable("katakana", "digraphs"));
+				$("#kana_table").append(generateTable("hiragana", "monographs_with_diacritics"));
+				$("#kana_table").append(generateTable("katakana", "monographs_with_diacritics"));
+				$("#kana_table").append(generateTable("hiragana", "digraphs_with_diacritics"));
+				$("#kana_table").append(generateTable("katakana", "digraphs_with_diacritics"));
 			</script>
 		</div>
 	</div>
