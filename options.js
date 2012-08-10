@@ -10,6 +10,7 @@ $(document).ready(function() {
 	var kana_set_selector = "monographs";
 
 	// default radio buttons
+	$("#button_df1").attr('checked', 'checked');
 	$("#button_kt1").attr('checked', 'checked');
 	$("#button_ks1").attr('checked', 'checked');
 	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
@@ -19,19 +20,19 @@ $(document).ready(function() {
 	// kana table type/set selector
 	$("input[type=radio]").on('click', function(){
 		// kana type selector
-		if ($('#button_kt1').is(':checked'))
+		if ($("#button_kt1").is(':checked'))
 			var kana_type_selector = "hiragana";
-		else if ($('#button_kt2').is(':checked'))
+		else if ($("#button_kt2").is(':checked'))
 			var kana_type_selector = "katakana";
 
 		// kana set selector
-		if ($('#button_ks1').is(':checked'))
+		if ($("#button_ks1").is(':checked'))
 			var kana_set_selector = "monographs";
-		else if ($('#button_ks2').is(':checked'))
+		else if ($("#button_ks2").is(':checked'))
 			var kana_set_selector = "digraphs";
-		else if ($('#button_ks3').is(':checked'))
+		else if ($("#button_ks3").is(':checked'))
 			var kana_set_selector = "monographs_with_diacritics";
-		else if ($('#button_ks4').is(':checked'))
+		else if ($("#button_ks4").is(':checked'))
 			var kana_set_selector = "digraphs_with_diacritics";
 
 		// on button selection change table

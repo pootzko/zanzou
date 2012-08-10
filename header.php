@@ -23,7 +23,7 @@
 
 
 <body>
-<!-- v0.2.0 -->
+<!-- v0.2.3 -->
 <div id="header"> <!-- HEADER -->
 	<div id="logo_holder">
 		<div id="header_kanji">残像</div>
