@@ -1,3 +1,49 @@
+//
+// CHECKBOX-evima DODATI FORM TAGOVE
+//
+
+
+
+$(document).ready(function() {
+	// default values
+	var kana_type_selector = "hiragana";
+	var kana_set_selector = "monographs";
+
+	// default radio buttons
+	$("#button_kt1").attr('checked', 'checked');
+	$("#button_ks1").attr('checked', 'checked');
+	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
+
+
+
+	// kana table type/set selector
+	$("input[type=radio]").on('click', function(){
+		// kana type selector
+		if ($('#button_kt1').is(':checked'))
+			var kana_type_selector = "hiragana";
+		else if ($('#button_kt2').is(':checked'))
+			var kana_type_selector = "katakana";
+
+		// kana set selector
+		if ($('#button_ks1').is(':checked'))
+			var kana_set_selector = "monographs";
+		else if ($('#button_ks2').is(':checked'))
+			var kana_set_selector = "digraphs";
+		else if ($('#button_ks3').is(':checked'))
+			var kana_set_selector = "monographs_with_diacritics";
+		else if ($('#button_ks4').is(':checked'))
+			var kana_set_selector = "digraphs_with_diacritics";
+
+		// on button selection change table
+		$("#kana_table").empty();
+		$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
+	});
+});
+
+
+
+
+
 function generateTable(kana_type, kana_set) {
 	var monograph_column_prefixes = ["a", "i", "u", "e", "o"];
 	var monograph_row_prefixes = ["∅", "K", "S", "T", "N", "H", "M", "Y", "R", "W"];
@@ -10,8 +56,6 @@ function generateTable(kana_type, kana_set) {
 
 	var digraphs_with_diacritics_column_prefixes = ["ya", "yu", "yo"];
 	var digraphs_with_diacritics_row_prefixes = ["G", "Z", "D", "B", "P"];
-
-
 
 	var rows, columns, column_prefixes, row_prefixes, symbols, special = "";
 	var table_header_row, table_header_column;
@@ -61,6 +105,7 @@ function generateTable(kana_type, kana_set) {
 		row_prefixes = monographs_with_diacritics_row_prefixes;
 		symbols = monographs_with_diacritics;
 
+		// "vu" symbol
 		if (kana_type == "hiragana") {
 			special = "" +
 				"<tr class='table_symbol'>" +
@@ -86,7 +131,6 @@ function generateTable(kana_type, kana_set) {
 
 
 
-
 	// populate table with kana
 	// create table header row
 	table_header_row = "<tr><td class='empty_box'></td>";
@@ -94,7 +138,6 @@ function generateTable(kana_type, kana_set) {
 		table_header_row += "<th>" + column_prefixes[i] + "</th>";
 	table_header_row += "</tr>";
 	table_content += table_header_row;
-
 
 	// table content
 	for (i=0; i<rows; i++) {
@@ -109,14 +152,15 @@ function generateTable(kana_type, kana_set) {
 			table_content += "</td>";
 		}
 
-		// row checkboxes
+		// select-whole-row checkboxes
 		table_content += "<td class='row_checkbox'><input type='checkbox' /></td></tr>";
 	}
 
+	// special symbols
 	if (special != "")
 		table_content += special;
 
 
+
 	return table_content += "</table>";
 }
-

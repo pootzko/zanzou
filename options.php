@@ -1,17 +1,4 @@
-<?php /******************************************************
-*===========================================================*
-*         - zanzou -                                        *
-*===========================================================*
-*************************************************************
-*
-* Copyright 2012, Tihomir Kit (kittihomir@gmail.com)
-* spilp is distributed under the terms of GNU General Public License v3
-* A copy of GNU GPL v3 license can be found in LICENSE.txt or
-* at http://www.gnu.org/licenses/gpl-3.0.html
-*
-************************************************************/
-
-
+<?php
 require 'header.php';
 require 'navigation.php';
 ?>
@@ -21,29 +8,34 @@ require 'navigation.php';
 <script type="text/javascript" src="kana.js"></script>
 
 
+
 <div id="content"> <!-- CONTENT -->
 	<h2>Options</h2>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 
-	<div id="kana_table_holder">
-		<div id="kana_table">
-			<script type="text/javascript">
-				$("#kana_table").append(generateTable("hiragana", "monographs"));
-				$("#kana_table").append(generateTable("katakana", "monographs"));
-				$("#kana_table").append(generateTable("hiragana", "digraphs"));
-				$("#kana_table").append(generateTable("katakana", "digraphs"));
-				$("#kana_table").append(generateTable("hiragana", "monographs_with_diacritics"));
-				$("#kana_table").append(generateTable("katakana", "monographs_with_diacritics"));
-				$("#kana_table").append(generateTable("hiragana", "digraphs_with_diacritics"));
-				$("#kana_table").append(generateTable("katakana", "digraphs_with_diacritics"));
-			</script>
-		</div>
+
+	<div id="practise_options">
+		<!-- kana type selector -->
+		<form action="" default:1>
+			<input type="radio" name="kana" value="hiragana" id="button_kt1" /> Hiragana
+			<input type="radio" name="kana" value="katakana" id="button_kt2" /> Katakana
+		</form>
+
+		<!-- kana set selector -->
+		<form action="" default:1>
+			<input type="radio" name="kana" value="monographs" id="button_ks1" /> Monographs
+			<input type="radio" name="kana" value="digraphs" id="button_ks2" /> Digraphs
+			<input type="radio" name="kana" value="monographs_with_diacritics" id="button_ks3" /> Monographs with diacritics
+			<input type="radio" name="kana" value="digraphs_with_diacritics" id="button_ks4" /> Digraphs with diacritics
+		</form>
 	</div>
 
 
 
-
+	<div id="kana_table_holder">
+		<div id="kana_table"></div>
+	</div>
 </div> <!-- /CONTENT -->
 
 
