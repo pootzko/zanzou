@@ -40,8 +40,8 @@ function initializeLocalStorage() {
 				}
 				else if (kana_set == 1) {
 					tmp_kana_set = "dia";
-					tmp_rows = 3;
-					tmp_columns = 7;
+					tmp_rows = 7;
+					tmp_columns = 3;
 				}
 				else if (kana_set == 2) {
 					tmp_kana_set = "mwd";
