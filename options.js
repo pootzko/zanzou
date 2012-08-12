@@ -47,7 +47,7 @@ $(document).ready(function() {
 
 
 function generateTable(kana_type, kana_set) {
-	var rows, columns, column_prefixes, row_prefixes, symbols, special = "";
+	var rows, columns, column_prefixes, row_prefixes, symbols, special;
 	var table_header_row, table_header_column;
 	var checkbox_id_prefix = "";;
 	var table_content = "<table>";
@@ -78,11 +78,16 @@ function generateTable(kana_type, kana_set) {
 		checkbox_id_prefix += "mon_";
 
 		// "n" symbol
+		n_symbol = "<b>" + symbols[10][0][k] + "</b> (" + symbols[10][0][0] + ")";
 		special = "" +
 			"<tr class='table_symbol'>" +
 			"	<td class='table_prefix'></td>" +
 			"	<td></td><td></td><td>" +
-			"		<input type='checkbox' />" + "<b>" + symbols[10][0][k] + "</b> (" + symbols[10][0][0] + ")" +
+			"		<input type='checkbox'" +
+			"			name='" + kana_set + "'" +
+			"			value='" + checkbox_id_prefix + "10_0'" +
+			"			id='" + checkbox_id_prefix + "10_0'" +
+			"			onclick='changeCheckboxState(\"" + checkbox_id_prefix + "10_0\")'/>" + n_symbol +
 			"	</td><td></td><td></td>" +
 			"	<td class='row_checkbox'>" +
 			"		<input type='checkbox' />" +
@@ -111,11 +116,16 @@ function generateTable(kana_type, kana_set) {
 
 		// "vu" symbol
 		if (kana_type == "hiragana") {
+			vu_symbol = "<b>" + symbols[5][0][k] + "</b> (" + symbols[5][0][0] + ")";
 			special = "" +
 				"<tr class='table_symbol'>" +
 				"	<td class='table_prefix'></td>" +
 				"	<td></td><td></td><td>" +
-				"		<input type='checkbox' />" + "<b>" + symbols[5][0][k] + "</b> (" + symbols[5][0][0] + ")" +
+				"		<input type='checkbox'" +
+				"			name='" + kana_set + "'" +
+				"			value='" + checkbox_id_prefix + "5_0'" +
+				"			id='" + checkbox_id_prefix + "5_0'" +
+				"			onclick='changeCheckboxState(\"" + checkbox_id_prefix + "5_0\")'/>" + vu_symbol +
 				"	</td><td></td><td></td>" +
 				"	<td class='row_checkbox'>" +
 				"		<input type='checkbox' />" +
@@ -220,5 +230,16 @@ function changeCheckboxState(this_id) {
 						else
 							storage_symbols.symbols[i].se = 0;
 						//console.log(storage_symbols.symbols[i].se);
+
+						// save changes to storage_symbols_obj
+						localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
+						console.log("table check changes stored to storage_symbols_obj " +
+							"(" + temp_id + " => " + storage_symbols.symbols[i].se + ")");
 					}
 }
+
+
+
+
+
+
