@@ -39,7 +39,7 @@ function initializeLocalStorage() {
 					tmp_columns = 5;
 				}
 				else if (kana_set == 1) {
-					tmp_kana_set = "dia";
+					tmp_kana_set = "dig";
 					tmp_rows = 7;
 					tmp_columns = 3;
 				}
@@ -57,17 +57,29 @@ function initializeLocalStorage() {
 
 				for (kana_row=0; kana_row<tmp_rows; kana_row++) {
 					for (kana_column=0; kana_column<tmp_columns; kana_column++) {
+						kana_selected = 0;
+
+						if (tmp_kana_set == "mon")
+							if (
+								((kana_row == 7) && (kana_column == 1)) ||
+								((kana_row == 7) && (kana_column == 3)) ||
+								((kana_row == 9) && (kana_column == 2))
+							)
+								kana_selected = null;
+
 						var tmp_JSON  = {
 								"kt": tmp_kana_type,
 								"ks": tmp_kana_set,
 								"kr": kana_row,
 								"kc": kana_column,
-								"se": 0,
+								"se": kana_selected,
 								"co": 0,
 								"to": 0,
 								"rl": 0,
 								"rh": 0
 						};
+
+
 
 						storage_symbols.symbols.push(tmp_JSON);
 
@@ -87,9 +99,9 @@ function initializeLocalStorage() {
 
 
 		// for first time users default-check hiragana monographs "a, i, u, e, o"
-		for (i=0; i<5; i++) {
+		for (var i=0; i<5; i++)
 			storage_symbols.symbols[i].se = 1;
-		}
+
 
 		localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
 		console.log("new storage_symbols_obj initialized");

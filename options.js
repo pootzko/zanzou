@@ -71,12 +71,10 @@ function generateTable(kana_type, kana_set) {
 
 	// set kana set and checkbox ID prefix (kana_set part)
 	if (kana_set == "monographs") {
-		monograph_column_prefixes = ["a", "i", "u", "e", "o"];
-		monograph_row_prefixes = ["∅", "K", "S", "T", "N", "H", "M", "Y", "R", "W"];
+		column_prefixes = ["a", "i", "u", "e", "o"];
+		row_prefixes = ["∅", "K", "S", "T", "N", "H", "M", "Y", "R", "W"];
 		rows = 10;
 		columns = 5;
-		column_prefixes = monograph_column_prefixes;
-		row_prefixes = monograph_row_prefixes;
 		symbols = monographs;
 		checkbox_id_prefix += "mon_";
 
@@ -100,22 +98,18 @@ function generateTable(kana_type, kana_set) {
 			"</tr>";
 	}
 	else if (kana_set == "digraphs") {
-		digraphs_column_prefixes = ["ya", "yu", "yo"];
-		digraphs_row_prefixes = ["K", "S", "T", "N", "H", "M", "R"];
+		column_prefixes = ["ya", "yu", "yo"];
+		row_prefixes = ["K", "S", "T", "N", "H", "M", "R"];
 		rows = 7;
 		columns = 3;
-		column_prefixes = digraphs_column_prefixes;
-		row_prefixes = digraphs_row_prefixes;
 		symbols = digraphs;
-		checkbox_id_prefix += "dia_";
+		checkbox_id_prefix += "dig_";
 	}
 	else if (kana_set == "monographs_with_diacritics") {
-		monographs_with_diacritics_column_prefixes = ["a", "i", "u", "e", "o"];
-		monographs_with_diacritics_row_prefixes = ["G", "Z", "D", "B", "P"];
+		column_prefixes = ["a", "i", "u", "e", "o"];
+		row_prefixes = ["G", "Z", "D", "B", "P"];
 		rows = 5;
 		columns = 5;
-		column_prefixes = monographs_with_diacritics_column_prefixes;
-		row_prefixes = monographs_with_diacritics_row_prefixes;
 		symbols = monographs_with_diacritics;
 		checkbox_id_prefix += "mwd_";
 
@@ -141,12 +135,10 @@ function generateTable(kana_type, kana_set) {
 		}
 	}
 	else if (kana_set == "digraphs_with_diacritics") {
-		digraphs_with_diacritics_column_prefixes = ["ya", "yu", "yo"];
-		digraphs_with_diacritics_row_prefixes = ["G", "Z", "D", "B", "P"];
+		column_prefixes = ["ya", "yu", "yo"];
+		row_prefixes = ["G", "Z", "D", "B", "P"];
 		rows = 5;
 		columns = 3;
-		column_prefixes = digraphs_with_diacritics_column_prefixes;
-		row_prefixes = digraphs_with_diacritics_row_prefixes;
 		symbols = digraphs_with_diacritics;
 		checkbox_id_prefix += "dwd_";
 	}
@@ -178,7 +170,7 @@ function generateTable(kana_type, kana_set) {
 			//console.log(checkbox_id);
 
 			table_content += "<td>";
-			if (symbols[i][j][k] != "")
+			if (symbols[i][j][k] != "") {
 				var symbol = "<b>" + symbols[i][j][k] + "</b> (" + symbols[i][j][0] + ")";
 				table_content += "" +
 					"<input type='checkbox'" +
@@ -186,6 +178,7 @@ function generateTable(kana_type, kana_set) {
 					"	value='" + checkbox_id + "'" +
 					"	id='" + checkbox_id + "'" +
 					"	onclick='changeCheckboxState(\"" + checkbox_id + "\")'/>" + symbol;
+			}
 			table_content += "</td>";
 		}
 
@@ -247,7 +240,7 @@ function changeCheckboxState(this_id) {
 					if (storage_symbols.symbols[i].kc == temp_id[3]) {
 						if (storage_symbols.symbols[i].se == 0)
 							storage_symbols.symbols[i].se = 1;
-						else
+						else if (storage_symbols.symbols[i].se == 1)
 							storage_symbols.symbols[i].se = 0;
 						break;
 					}
@@ -275,7 +268,7 @@ function changeCheckboxRowState(this_id) {
 				if (storage_symbols.symbols[j].ks == temp_id[1])
 					if (storage_symbols.symbols[j].kr == temp_id[2])
 						if (storage_symbols.symbols[j].kc == i)
-							if (storage_symbols.symbols[j].se == "1")
+							if (storage_symbols.symbols[j].se == 1)
 								temp_state = 1;
 
 
@@ -293,7 +286,8 @@ function changeCheckboxRowState(this_id) {
 				if (storage_symbols.symbols[j].ks == temp_id[1])
 					if (storage_symbols.symbols[j].kr == temp_id[2])
 						if (storage_symbols.symbols[j].kc == i)
-							storage_symbols.symbols[j].se = new_state;
+							if (storage_symbols.symbols[j].se != null)
+								storage_symbols.symbols[j].se = new_state;
 
 
 	// save changes to storage_symbols_obj
@@ -315,7 +309,7 @@ function changeCheckboxTableState(this_id) {
 
 
 	// check if any checkboxes in table are checked
-	for (var i=0; i< temp_id[3]; i++)
+	for (var i=0; i<temp_id[3]; i++)
 		for (var j=0; j<temp_id[4]; j++)
 			for (var k=0; k<storage_symbols.symbols.length; k++) {
 				if (temp_state == 1)
@@ -326,20 +320,22 @@ function changeCheckboxTableState(this_id) {
 					if (storage_symbols.symbols[k].ks == temp_id[1])
 						if (storage_symbols.symbols[k].kr == i)
 							if (storage_symbols.symbols[k].kc == j)
-								if (storage_symbols.symbols[k].se == "1")
+								if (storage_symbols.symbols[k].se == 1)
 									temp_state = 1;
 
 				// for "n" symbol
-				if (temp_id[1] == "mon")
-					if (storage_symbols.symbols[k].kr == 10)
-						if (storage_symbols.symbols[k].se == "1")
-							temp_state = 1;
+				if (storage_symbols.symbols[k].kt == temp_id[0])
+					if ((temp_id[1] == "mon") && (storage_symbols.symbols[k].ks == "mon"))
+						if (storage_symbols.symbols[k].kr == 10)
+							if (storage_symbols.symbols[k].se == 1)
+								temp_state = 1;
 
 				// for "vu" symbol
-				if ((temp_id[0] == "h") && (temp_id[1] == "mwd"))
-					if (storage_symbols.symbols[k].kr == 5)
-						if (storage_symbols.symbols[k].se == "1")
-							temp_state = 1;
+				if ((temp_id[0] == "h") && (storage_symbols.symbols[k].kt == "h"))
+					if ((temp_id[1] == "mwd") && (storage_symbols.symbols[k].ks == "mwd"))
+						if (storage_symbols.symbols[k].kr == 5)
+							if (storage_symbols.symbols[k].se == 1)
+								temp_state = 1;
 			}
 
 
@@ -351,7 +347,7 @@ function changeCheckboxTableState(this_id) {
 
 
 	// set new states to all symbols
-	for (var i=0; i< temp_id[3]; i++)
+	for (var i=0; i<temp_id[3]; i++)
 		for (var j=0; j<temp_id[4]; j++)
 			for (var k=0; k<storage_symbols.symbols.length; k++) {
 				// for all symbols except "n" and "vu"
@@ -359,17 +355,20 @@ function changeCheckboxTableState(this_id) {
 					if (storage_symbols.symbols[k].ks == temp_id[1])
 						if (storage_symbols.symbols[k].kr == i)
 							if (storage_symbols.symbols[k].kc == j)
-								storage_symbols.symbols[k].se = new_state;
+								if (storage_symbols.symbols[k].se != null)
+									storage_symbols.symbols[k].se = new_state;
 
 				// for "n" symbol
-				if (temp_id[1] == "mon")
-					if (storage_symbols.symbols[k].kr == 10)
-						storage_symbols.symbols[k].se = new_state;
+				if (storage_symbols.symbols[k].kt == temp_id[0])
+					if ((temp_id[1] == "mon") && (storage_symbols.symbols[k].ks == "mon"))
+						if (storage_symbols.symbols[k].kr == 10)
+							storage_symbols.symbols[k].se = new_state;
 
 				// for "vu" symbol
-				if ((temp_id[0] == "h") && (temp_id[1] == "mwd"))
-					if (storage_symbols.symbols[k].kr == 5)
-						storage_symbols.symbols[k].se = new_state;
+				if ((temp_id[0] == "h") && (storage_symbols.symbols[k].kt == "h"))
+					if ((temp_id[1] == "mwd") && (storage_symbols.symbols[k].ks == "mwd"))
+						if (storage_symbols.symbols[k].kr == 5)
+							storage_symbols.symbols[k].se = new_state;
 			}
 
 
