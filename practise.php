@@ -16,22 +16,7 @@ require 'navigation.php';
 		<div id="flashcard">
 			<div id="flashcard_content"></div>
 		</div>
-		<div id="flashcard_table">
-			<table>
-				<tr>
-					<td>ka</td>
-					<td>a</td>
-					<td>chi</td>
-					<td>sha</td>
-				</tr>
-				<tr>
-					<td>byu</td>
-					<td>myu</td>
-					<td>o</td>
-					<td>za</td>
-				</tr>
-			</table>
-		</div>
+		<div id="flashcard_table"></div>
 </div> <!-- /CONTENT -->
 
 

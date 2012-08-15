@@ -9,6 +9,8 @@ function initializeLocalStorage() {
 	* 	kana_set: value,
 	* 	kana_row: value,
 	* 	kana_column: value,
+	* 	kana_roumaji: value,
+	* 	kana_symbol: value,
 	* 	selected: value,
 	* 	correct: value,
 	* 	total: value,
@@ -18,17 +20,16 @@ function initializeLocalStorage() {
 	*
 	*/
 
-	// dodati "n" i "vu"
 
 	if (localStorage.getItem("storage_symbols_obj") == null) {
 		console.log("storage_symbols_obj does not exist, initializing new storage_symbols_obj");
 
 		var storage_symbols = {"symbols": []};
 
-		for (kana_type=0; kana_type<2; kana_type++) {
-			if (kana_type == 0)
+		for (kana_type=1; kana_type<3; kana_type++) {
+			if (kana_type == 1)
 				tmp_kana_type = "h"; // hiragana
-			else
+			else if (kana_type == 2)
 				tmp_kana_type = "k"; // katakana
 
 
@@ -57,6 +58,35 @@ function initializeLocalStorage() {
 
 				for (kana_row=0; kana_row<tmp_rows; kana_row++) {
 					for (kana_column=0; kana_column<tmp_columns; kana_column++) {
+						// for "n" symbol
+						if ((kana_row == 10) && (kana_column == 1))
+							break;
+
+						// for "vu" symbol
+						if ((kana_row == 5) && (kana_column == 1))
+							if ((kana_set == 2) && (kana_type == 1))
+								break;
+						else if ((kana_row == 5) && (kana_set == 2) && (kana_type == 2))
+							break;
+
+
+						if (kana_set == 0) {
+							kana_symbol = monographs[kana_row][kana_column][kana_type];
+							kana_roumaji = monographs[kana_row][kana_column][0];
+						}
+						if (kana_set == 1) {
+							kana_symbol = digraphs[kana_row][kana_column][kana_type];
+							kana_roumaji = digraphs[kana_row][kana_column][0];
+						}
+						if (kana_set == 2) {
+							kana_symbol = monographs_with_diacritics[kana_row][kana_column][kana_type];
+							kana_roumaji = monographs_with_diacritics[kana_row][kana_column][0];
+						}
+						if (kana_set == 3) {
+							kana_symbol = digraphs_with_diacritics[kana_row][kana_column][kana_type];
+							kana_roumaji = digraphs_with_diacritics[kana_row][kana_column][0];
+						}
+
 						kana_selected = 0;
 
 						if (tmp_kana_set == "mon")
@@ -72,6 +102,8 @@ function initializeLocalStorage() {
 								"ks": tmp_kana_set,
 								"kr": kana_row,
 								"kc": kana_column,
+								"ro": kana_roumaji,
+								"sy": kana_symbol,
 								"se": kana_selected,
 								"co": 0,
 								"to": 0,
@@ -80,18 +112,7 @@ function initializeLocalStorage() {
 						};
 
 
-
 						storage_symbols.symbols.push(tmp_JSON);
-
-						// for "n" symbol
-						if ((kana_row == 10) && (kana_column == 0))
-							break;
-
-						// for "vu" symbol
-						if ((kana_row == 5) && (kana_column == 0))
-							if ((kana_type == 0) && (kana_set == 2))
-								break;
-
 					}
 				}
 			}

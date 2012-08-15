@@ -1,7 +1,7 @@
 /*
 *
-*   first array value -> determines consonant prefix
-*   second array value -> determines the wovel
+*   first array value -> determines consonant prefix (row)
+*   second array value -> determines the wovel (column)
 *   third array value -> determines writing type (roumaji/hiragana/katakana)
 *
 */
@@ -36,7 +36,7 @@ var monographs_with_diacritics = [
 	[["da", "だ", "ダ"], ["ji", "ぢ", "ヂ"], ["zu", "づ", "ヅ"], ["de", "で", "デ"], ["do", "ど", "ド"]],
 	[["ba", "ば", "バ"], ["bi", "び", "ビ"], ["bu", "ぶ", "ブ"], ["be", "べ", "ベ"], ["bo", "ぼ", "ボ"]],
 	[["pa", "ぱ", "パ"], ["pi", "ぴ", "ピ"], ["pu", "ぷ", "プ"], ["pe", "ぺ", "ペ"], ["po", "ぽ", "ポ"]],
-	[["vu", "ゔ"]]
+	[["vu", "ゔ", ""]]
 ];
 
 var digraphs_with_diacritics = [
