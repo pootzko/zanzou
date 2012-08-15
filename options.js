@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 
 	// kana table type/set selector (change on click)
-	$("input[type='radio']").on('click', function(){
+	$("input[type='radio']").on('click', function() {
 		// kana type selector
 		if ($("#button_kt1").is(':checked'))
 			var kana_type_selector = "hiragana";

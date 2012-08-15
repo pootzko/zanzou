@@ -27,6 +27,7 @@ a:active {
 
 h2 {
 	font-size: 1.8em;
+	margin-top: 2px;
 	margin-left: 14px;
 }
 div#header {
@@ -89,17 +90,20 @@ div#navigation ul {
 
 div#navigation li {
 	margin-bottom: 23px;
-	padding: 0 15px;
+	padding: 0 8px;
 }
 
 div#content_holder {
 	width: 760px;
 	float: right;
+	margin: 10px 0 50px;
+	padding-left: 7px;
+	border-left: #4A4945 2px solid;
 }
 
 div#content {
 	margin-bottom: 50px;
-	padding: 0 10px;
+	padding: 0 10px 5px;
 }
 
 div#practise_options {
@@ -164,7 +168,8 @@ div#kana_table td.row_checkbox {
 
 div#test {
 	width: 600px;
-	margin-bottom: 60px;
+	margin-bottom: 20px;
+	padding-top: 60px;
 }
 
 div#flashcard {
@@ -200,20 +205,34 @@ div#flashcard_table table {
 }
 
 div#flashcard_table tr {
-	background-color: #4a4945;
 }
 
 div#flashcard_table td {
 	width: 96px;
 	height: 24px;
+	background-color: #4a4945;
 	color: #f4f2e6;
 	text-align: center;
+}
+
+div#flashcard_table td:hover {
+	background-color: #313236;
+}
+
+div#flashcard_table td:active {
+	background-color: #64635e;
+}
+
+div#flashcard_table td.answers_table_header, td.answers_table_header:hover, td.answers_table_header:active {
+	background-color: #E5E0C3;
+	color: #4a4945;
+	font-weight: bold;
 }
 
 div#footer {
 	clear: both;
 	width: auto;
-	height: 30px;
+	height: 19px;
 	margin: 15px 0 0 10px;
 	font-size: 0.8em;
 }

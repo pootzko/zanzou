@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=8" /> <!-- enables fetching JSON values... *sigh* -->
 	<title>Memorize kana easily with Zanzou</title>
 	<link rel="stylesheet" type="text/css" href="zanzou.css" />
 	<link rel="shortcut icon" href="/images/favicon.ico" />
