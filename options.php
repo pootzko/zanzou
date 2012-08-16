@@ -4,7 +4,9 @@ require 'navigation.php';
 ?>
 
 <script type="text/javascript" src="javascript_libs/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="javascript_libs/jquery.cookie.js"></script>
 <script type="text/javascript" src="localstorage.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
 <script type="text/javascript" src="options.js"></script>
 <script type="text/javascript" src="kana.js"></script>
 
@@ -19,17 +21,17 @@ require 'navigation.php';
 
 	<div id="practise_options">
 		<h3>Difficulty</h3>
-		<form action="" default:1>
-			<input type="radio" name="difficulty" value="beginner" id="button_df1" /> Beginner
-			<input type="radio" name="difficulty" value="intermediate" id="button_df2" /> Intermediate
-			<input type="radio" name="difficulty" value="advanced" id="button_df2" /> Advanced
+		<form action="">
+			<input type="radio" name="difficulty" value="beginner" id="button_df4" onclick="changeDifficulty(4)" /> Beginner
+			<input type="radio" name="difficulty" value="intermediate" id="button_df8" onclick="changeDifficulty(8)" /> Intermediate
+			<input type="radio" name="difficulty" value="advanced" id="button_df12" onclick="changeDifficulty(12)" /> Advanced
 		</form>
 
 		<h3>Flashcard type</h3>
-		<form action="" default:1>
-			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" /> Kana to roumaji
-			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" /> Roumaji to kana
-			<input type='checkbox' name="flashcard_type" value="voice_to_kana" /> Voice to kana
+		<form action="">
+			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" id="button_ktr"/> Kana to roumaji
+			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" id="button_rmk"/> Roumaji to kana
+			<input type='checkbox' name="flashcard_type" value="voice_to_kana" id="button_vtk"/> Voice to kana
 		</form>
 
 		<h3>Kana</h3>

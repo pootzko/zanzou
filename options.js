@@ -14,7 +14,7 @@ $(document).ready(function() {
 	$("#button_ks1").attr('checked', true);
 	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
 
-	initializeCheckboxes();
+	initializeTableCheckboxes();
 
 
 
@@ -41,9 +41,29 @@ $(document).ready(function() {
 		$("#kana_table").empty();
 		$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
 
-		initializeCheckboxes();
+		initializeTableCheckboxes();
 	});
 });
+
+
+
+
+
+// initialize option values from cookie
+function initializeOptions() {
+	var difficulty_id = "button_df" + $.cookie("difficulty");
+
+	$(difficulty_id).attr('checked', true);
+}
+
+
+
+
+
+// change difficulty cookie values
+function changeDifficulty(difficulty_value) {
+	$.cookie("difficulty", difficulty_value);
+}
 
 
 
@@ -206,8 +226,9 @@ function generateTable(kana_type, kana_set) {
 
 
 
-function initializeCheckboxes() {
-	console.log("initializing checkboxes");
+// check/uncheck selected checkboxes
+function initializeTableCheckboxes() {
+	console.log("initializing table checkboxes");
 	for (i=0; i<storage_symbols.symbols.length; i++) {
 		var checkbox_id = "#";
 
@@ -225,7 +246,7 @@ function initializeCheckboxes() {
 		else
 			$(checkbox_id).attr('checked', false);
 	}
-	console.log("checkboxes set successfully");
+	console.log("table checkboxes initialized successfully");
 }
 
 
@@ -303,7 +324,7 @@ function changeCheckboxRowState(this_id) {
 	console.log("table check changes stored to storage_symbols_obj " +
 		"(" + temp_id + " => " + new_state + ")");
 
-	initializeCheckboxes();
+	initializeTableCheckboxes();
 }
 
 
@@ -387,5 +408,5 @@ function changeCheckboxTableState(this_id) {
 	console.log("table check changes stored to storage_symbols_obj " +
 		"(" + temp_id + " => " + new_state + ")");
 
-	initializeCheckboxes();
+	initializeTableCheckboxes();
 }

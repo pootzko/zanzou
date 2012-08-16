@@ -28,7 +28,7 @@ function setFlashcard() {
 	var temp_row = checked_storage_symbols.symbols[correct_answer_index].kr;
 	var temp_column = checked_storage_symbols.symbols[correct_answer_index].kc;
 	var temp_type = checked_storage_symbols.symbols[correct_answer_index].kt;
-	console.log("flashcard set => monographs[" + temp_row + "][" + temp_column + "][" + temp_type + "]");
+	console.log("flashcard initialized => monographs[" + temp_row + "][" + temp_column + "][" + temp_type + "]");
 
 
 	// output flashcard
@@ -53,13 +53,13 @@ function initializeAnswers(checked_storage_symbols) {
 
 
 	// prepare the correct answer
-	var random_index = Math.floor(Math.random() * 8);
+	var random_index = Math.floor(Math.random() * $.cookie("difficulty"));
 	answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].ro;
 	console.log("correct flashcard answer set");
 
 
 	// prepare wrong answers
-	while (i<8) {
+	while (i<$.cookie("difficulty")) {
 		skip_flag = 0;
 
 		// prepare incorrect answers if answers[i] is not the correct answer
@@ -103,7 +103,7 @@ function initializeAnswers(checked_storage_symbols) {
 		"	<td class='answers_table_header'><a href='/practice.php'>skip</a></td>" +
 		"</tr>";
 
-	for (i=0; i<2; i++) {
+	for (i=0; i<($.cookie("difficulty") / 4); i++) {
 		answer_boxes += "<tr>";
 		for (j=0; j<4; j++) {
 			if (String(answers[temp_index]) == checked_storage_symbols.symbols[correct_answer_index].ro)

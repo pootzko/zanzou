@@ -16,6 +16,10 @@ require 'header.php';
 require 'navigation.php';
 ?>
 
+<script type="text/javascript" src="javascript_libs/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="javascript_libs/jquery.cookie.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+
 
 
 <h2>Home</h2>
