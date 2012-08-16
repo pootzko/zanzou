@@ -1,0 +1,47 @@
+TO-DO:
+--------------
+
+v0.1.0
+to production!
+
+v0.5.0
+authentication implementation
+
+v0.4.0
+statistics implementation
+
+v0.3.0
+intelligent algorithm implementation
+
+v0.2.x
+implement all options checkbox functionality
+implement sound
+
+
+
+
+
+CHANGELOG HISTORY:
+--------------
+
+v0.2.9
+implemented next flashcard timer
+simplified setFlashcard() function
+added some comments
+added console logging
+
+v0.2.8
+IE9 compatibility bug fix
+minor design enhancements
+new random answers checking algorithm
+
+v0.2.7
+bug fixes
+implemented random answers
+
+v0.2.6
+table checking bug fixes
+implemented basic practise flashcard rotation
+
+V0.2.5
+implemented row and table checkbox check/uncheck functionality
