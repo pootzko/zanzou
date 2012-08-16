@@ -35,22 +35,22 @@ function initializeLocalStorage() {
 
 			for (kana_set=0; kana_set<4; kana_set++) {
 				if (kana_set == 0) {
-					tmp_kana_set = "mon";
+					tmp_kana_set = "mon"; // monographs
 					tmp_rows = 11;
 					tmp_columns = 5;
 				}
 				else if (kana_set == 1) {
-					tmp_kana_set = "dig";
+					tmp_kana_set = "dig"; // digraphs
 					tmp_rows = 7;
 					tmp_columns = 3;
 				}
 				else if (kana_set == 2) {
-					tmp_kana_set = "mwd";
+					tmp_kana_set = "mwd"; // monographs_with_diacritics
 					tmp_rows = 6;
 					tmp_columns = 5;
 				}
 				else {
-					tmp_kana_set = "dwd";
+					tmp_kana_set = "dwd"; // digraphs_with_diacritics
 					tmp_rows = 5;
 					tmp_columns = 3;
 				}
@@ -58,11 +58,11 @@ function initializeLocalStorage() {
 
 				for (kana_row=0; kana_row<tmp_rows; kana_row++) {
 					for (kana_column=0; kana_column<tmp_columns; kana_column++) {
-						// for "n" symbol
+						// for "n" symbol skip the rest of the row
 						if ((kana_row == 10) && (kana_column == 1))
 							break;
 
-						// for "vu" symbol
+						// for "vu" symbol skip the rest of the row
 						if ((kana_row == 5) && (kana_column == 1))
 							if ((kana_set == 2) && (kana_type == 1))
 								break;
@@ -70,6 +70,7 @@ function initializeLocalStorage() {
 							break;
 
 
+						// prepare kana and roumaji values
 						if (kana_set == 0) {
 							kana_symbol = monographs[kana_row][kana_column][kana_type];
 							kana_roumaji = monographs[kana_row][kana_column][0];
@@ -87,6 +88,8 @@ function initializeLocalStorage() {
 							kana_roumaji = digraphs_with_diacritics[kana_row][kana_column][0];
 						}
 
+
+						// set empty array members values to null
 						kana_selected = 0;
 
 						if (tmp_kana_set == "mon")
@@ -96,6 +99,7 @@ function initializeLocalStorage() {
 								((kana_row == 9) && (kana_column == 2))
 							)
 								kana_selected = null;
+
 
 						var tmp_JSON  = {
 								"kt": tmp_kana_type,
@@ -111,7 +115,6 @@ function initializeLocalStorage() {
 								"rh": 0
 						};
 
-
 						storage_symbols.symbols.push(tmp_JSON);
 					}
 				}
@@ -124,11 +127,12 @@ function initializeLocalStorage() {
 			storage_symbols.symbols[i].se = 1;
 
 
+		// save changes to storage_symbols_obj
 		localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
 		console.log("new storage_symbols_obj initialized");
 	}
 	else
-		console.log("storage_symbols_obj exists");
+		console.log("storage_symbols_obj already exists");
 }
 
 

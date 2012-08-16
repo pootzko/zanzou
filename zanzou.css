@@ -195,7 +195,7 @@ div#flashcard_content {
 }
 
 div#flashcard_table {
-    margin: 10px auto 0;
+    margin: 20px auto 0;
 	display: table;
 }
 
@@ -213,6 +213,7 @@ div#flashcard_table td {
 	background-color: #4a4945;
 	color: #f4f2e6;
 	text-align: center;
+	cursor: pointer;
 }
 
 div#flashcard_table td:hover {

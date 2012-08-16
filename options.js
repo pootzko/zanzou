@@ -49,7 +49,9 @@ $(document).ready(function() {
 
 
 
+// generate kana selected tables
 function generateTable(kana_type, kana_set) {
+	console.log("generating kana table");
 	var rows, columns, column_prefixes, row_prefixes, symbols, special;
 	var table_header_row, table_header_column;
 	var checkbox_id_prefix = "";;
@@ -191,12 +193,12 @@ function generateTable(kana_type, kana_set) {
 			"</td></tr>";
 	}
 
-	// add special symbols if they exist in current kana_set
+	// append special symbols if they exist in current kana_set
 	if (special != "")
 		table_content += special;
 
 
-
+	console.log("kana table generated successfully");
 	return table_content += "</table>";
 }
 
@@ -205,6 +207,7 @@ function generateTable(kana_type, kana_set) {
 
 
 function initializeCheckboxes() {
+	console.log("initializing checkboxes");
 	for (i=0; i<storage_symbols.symbols.length; i++) {
 		var checkbox_id = "#";
 
@@ -222,13 +225,16 @@ function initializeCheckboxes() {
 		else
 			$(checkbox_id).attr('checked', false);
 	}
+	console.log("checkboxes set successfully");
 }
 
 
 
 
 
+// change single-checkbox state on click
 function changeCheckboxState(this_id) {
+	console.log("initializing checkbox state change");
 	var temp_id = this_id.split("_");
 
 
@@ -255,7 +261,9 @@ function changeCheckboxState(this_id) {
 
 
 
+// change checkbox-row state on click
 function changeCheckboxRowState(this_id) {
+	console.log("initializing checkbox-row state change");
 	// temp_id model: kana_type, kana_set, row, "row", columns
 	var temp_id = this_id.split("_");
 	var temp_state = 0, new_state;
@@ -302,7 +310,9 @@ function changeCheckboxRowState(this_id) {
 
 
 
+// change checkbox-table state on click
 function changeCheckboxTableState(this_id) {
+	console.log("initializing checkbox-table state change");
 	// temp_id model: kana_type, kana_set, "table", rows, columns
 	var temp_id = this_id.split("_");
 	var temp_state = 0, new_state;
