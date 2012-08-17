@@ -1,4 +1,4 @@
-function initializeCookie() {
+$(document).ready(function() {
 	// difficulty:
 	// 4 => beginner
 	// 8 => intermediate
@@ -7,5 +7,5 @@ function initializeCookie() {
 		console.log("cookie set");
 		$.cookie("difficulty", 4);
 	}
-};
+});
 

@@ -2,41 +2,7 @@ $(document).ready(function() {
 	initializeLocalStorage();
 	storage_symbols = JSON.parse(localStorage.getItem("storage_symbols_obj"));
 
-
-	initializeCookie();
 	initializeOptions();
-
-
-	// kana table type/set selector (change on click)
-	$("input[type='radio']").on('click', function() {
-		// default values
-		var kana_type_selector = "hiragana";
-		var kana_set_selector = "monographs";
-
-
-		// kana type selector
-		if ($("#button_kt1").is(':checked'))
-			var kana_type_selector = "hiragana";
-		else if ($("#button_kt2").is(':checked'))
-			var kana_type_selector = "katakana";
-
-		// kana set selector
-		if ($("#button_ks1").is(':checked'))
-			var kana_set_selector = "monographs";
-		else if ($("#button_ks2").is(':checked'))
-			var kana_set_selector = "digraphs";
-		else if ($("#button_ks3").is(':checked'))
-			var kana_set_selector = "monographs_with_diacritics";
-		else if ($("#button_ks4").is(':checked'))
-			var kana_set_selector = "digraphs_with_diacritics";
-
-
-		// on button selection change table
-		$("#kana_table").empty();
-		$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
-
-		initializeTableCheckboxes();
-	});
 });
 
 
@@ -45,7 +11,7 @@ $(document).ready(function() {
 
 // initialize option values from cookie
 function initializeOptions() {
-	// default values
+	console.log("initializing options");
 	var difficulty_id = "#button_df" + $.cookie("difficulty");
 	var kana_type_selector = "hiragana";
 	var kana_set_selector = "monographs";
@@ -58,6 +24,8 @@ function initializeOptions() {
 	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
 
 	initializeTableCheckboxes();
+
+	console.log("options initialized");
 }
 
 
@@ -67,6 +35,45 @@ function initializeOptions() {
 // change difficulty cookie values
 function changeDifficulty(difficulty_value) {
 	$.cookie("difficulty", difficulty_value);
+}
+
+
+
+
+
+//
+function changeFlashcardType() {
+
+}
+
+
+
+
+
+// changes kana table type/set (on click)
+function changeKanaTable() {
+	// kana type selector
+	if ($("#button_kt1").is(':checked'))
+		var kana_type_selector = "hiragana";
+	else if ($("#button_kt2").is(':checked'))
+		var kana_type_selector = "katakana";
+
+	// kana set selector
+	if ($("#button_ks1").is(':checked'))
+		var kana_set_selector = "monographs";
+	else if ($("#button_ks2").is(':checked'))
+		var kana_set_selector = "digraphs";
+	else if ($("#button_ks3").is(':checked'))
+		var kana_set_selector = "monographs_with_diacritics";
+	else if ($("#button_ks4").is(':checked'))
+		var kana_set_selector = "digraphs_with_diacritics";
+
+
+	// on button selection change table
+	$("#kana_table").empty();
+	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
+
+	initializeTableCheckboxes();
 }
 
 

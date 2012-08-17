@@ -55,7 +55,7 @@ function initializeAnswers(checked_storage_symbols) {
 	// prepare the correct answer
 	var random_index = Math.floor(Math.random() * $.cookie("difficulty"));
 	answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].ro;
-	console.log("correct flashcard answer set");
+	console.log("correct flashcard answer set " + answers[random_index]);
 
 
 	// prepare wrong answers
@@ -66,11 +66,13 @@ function initializeAnswers(checked_storage_symbols) {
 		if (i != random_index) {
 			current_symbol_index = Math.floor(Math.random() * storage_symbols_range);
 			answers[i] = storage_symbols.symbols[current_symbol_index].ro;
+			console.log("incorrect flashcard answer set " + answers[i]);
 
 			// skip repeated answers
 			for (j=0; j<i; j++) {
-				if (answers[i] == answers[j]) {
+				if (String(answers[i]) == String(answers[j])) {
 					skip_flag = 1;
+					console.log("skipping " + answers[i]);
 				}
 			}
 			// skip empty symbol values

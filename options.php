@@ -22,31 +22,31 @@ require 'navigation.php';
 	<div id="practise_options">
 		<h3>Difficulty</h3>
 		<form action="">
-			<input type="radio" name="difficulty" value="beginner" id="button_df4" onclick="changeDifficulty(4)" /> Beginner
-			<input type="radio" name="difficulty" value="intermediate" id="button_df8" onclick="changeDifficulty(8)" /> Intermediate
-			<input type="radio" name="difficulty" value="advanced" id="button_df12" onclick="changeDifficulty(12)" /> Advanced
+			<input type="radio" name="difficulty" value="beginner" id="button_df4" onclick="changeDifficulty(4);" /> Beginner
+			<input type="radio" name="difficulty" value="intermediate" id="button_df8" onclick="changeDifficulty(8);" /> Intermediate
+			<input type="radio" name="difficulty" value="advanced" id="button_df12" onclick="changeDifficulty(12);" /> Advanced
 		</form>
 
 		<h3>Flashcard type</h3>
 		<form action="">
-			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" id="button_ktr"/> Kana to roumaji
-			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" id="button_rmk"/> Roumaji to kana
-			<input type='checkbox' name="flashcard_type" value="voice_to_kana" id="button_vtk"/> Voice to kana
+			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" id="button_ktr" /> Kana to roumaji
+			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" id="button_rmk" /> Roumaji to kana
+			<input type='checkbox' name="flashcard_type" value="voice_to_kana" id="button_vtk" /> Voice to kana
 		</form>
 
 		<h3>Kana</h3>
 		<!-- kana type selector -->
 		<form action="" default:1>
-			<input type="radio" name="kana_type" value="hiragana" id="button_kt1" /> Hiragana
-			<input type="radio" name="kana_type" value="katakana" id="button_kt2" /> Katakana
+			<input type="radio" name="kana_type" value="hiragana" id="button_kt1" onclick="changeKanaTable();" /> Hiragana
+			<input type="radio" name="kana_type" value="katakana" id="button_kt2" onclick="changeKanaTable();" /> Katakana
 		</form>
 
 		<!-- kana set selector -->
 		<form action="" default:1>
-			<input type="radio" name="kana_set" value="monographs" id="button_ks1" /> Monographs
-			<input type="radio" name="kana_set" value="digraphs" id="button_ks2" /> Digraphs
-			<input type="radio" name="kana_set" value="monographs_with_diacritics" id="button_ks3" /> Monographs with diacritics
-			<input type="radio" name="kana_set" value="digraphs_with_diacritics" id="button_ks4" /> Digraphs with diacritics
+			<input type="radio" name="kana_set" value="monographs" id="button_ks1" onclick="changeKanaTable();" /> Monographs
+			<input type="radio" name="kana_set" value="digraphs" id="button_ks2" onclick="changeKanaTable();" /> Digraphs
+			<input type="radio" name="kana_set" value="monographs_with_diacritics" id="button_ks3" onclick="changeKanaTable();" /> Monographs with diacritics
+			<input type="radio" name="kana_set" value="digraphs_with_diacritics" id="button_ks4" onclick="changeKanaTable();" /> Digraphs with diacritics
 		</form>
 	</div>
 
