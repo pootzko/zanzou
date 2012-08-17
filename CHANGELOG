@@ -26,6 +26,9 @@ CHANGELOG HISTORY:
 
 v0.2.10
 added LICENSE.txt and CHANGELOG files
+implemented difficulty option functionality
+minor kana sets changes (doubled symbols)
+cookie bug fix
 
 v0.2.9
 implemented next flashcard timer

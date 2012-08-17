@@ -3,23 +3,17 @@ $(document).ready(function() {
 	storage_symbols = JSON.parse(localStorage.getItem("storage_symbols_obj"));
 
 
-	// default values
-	var kana_type_selector = "hiragana";
-	var kana_set_selector = "monographs";
-
-
-	// default radio buttons
-	$("#button_df1").attr('checked', true);
-	$("#button_kt1").attr('checked', true);
-	$("#button_ks1").attr('checked', true);
-	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
-
-	initializeTableCheckboxes();
-
+	initializeCookie();
+	initializeOptions();
 
 
 	// kana table type/set selector (change on click)
 	$("input[type='radio']").on('click', function() {
+		// default values
+		var kana_type_selector = "hiragana";
+		var kana_set_selector = "monographs";
+
+
 		// kana type selector
 		if ($("#button_kt1").is(':checked'))
 			var kana_type_selector = "hiragana";
@@ -51,9 +45,19 @@ $(document).ready(function() {
 
 // initialize option values from cookie
 function initializeOptions() {
-	var difficulty_id = "button_df" + $.cookie("difficulty");
+	// default values
+	var difficulty_id = "#button_df" + $.cookie("difficulty");
+	var kana_type_selector = "hiragana";
+	var kana_set_selector = "monographs";
 
+	// default radio buttons
 	$(difficulty_id).attr('checked', true);
+	$("#button_ktr").attr('checked', true);
+	$("#button_kt1").attr('checked', true);
+	$("#button_ks1").attr('checked', true);
+	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
+
+	initializeTableCheckboxes();
 }
 
 
@@ -72,9 +76,9 @@ function changeDifficulty(difficulty_value) {
 // generate kana selected tables
 function generateTable(kana_type, kana_set) {
 	console.log("generating kana table");
-	var rows, columns, column_prefixes, row_prefixes, symbols, special;
+	var rows, columns, column_prefixes, row_prefixes, symbols;
 	var table_header_row, table_header_column;
-	var checkbox_id_prefix = "";;
+	var checkbox_id_prefix = "", special = "";
 	var table_content = "<table>";
 
 
@@ -134,27 +138,6 @@ function generateTable(kana_type, kana_set) {
 		columns = 5;
 		symbols = monographs_with_diacritics;
 		checkbox_id_prefix += "mwd_";
-
-		// "vu" symbol
-		if (kana_type == "hiragana") {
-			vu_symbol = "<b>" + symbols[5][0][k] + "</b> (" + symbols[5][0][0] + ")";
-			special = "" +
-				"<tr class='table_symbol'>" +
-				"	<td class='table_prefix'></td>" +
-				"	<td></td><td></td><td>" +
-				"		<input type='checkbox'" +
-				"			name='" + kana_set + "'" +
-				"			value='" + checkbox_id_prefix + "5_0'" +
-				"			id='" + checkbox_id_prefix + "5_0'" +
-				"			onclick='changeCheckboxState(\"" + checkbox_id_prefix + "5_0\")'/>" + vu_symbol +
-				"	</td><td></td><td></td>" +
-				"	<td class='row_checkbox'>" +
-				"		<a href='javascript:;'" +
-				"		onclick='changeCheckboxRowState(\"" + checkbox_id_prefix + 5 + "_row_" + columns + "\");" +
-				"		return false;'>x</a>" +
-				"	</td>" +
-				"</tr>";
-		}
 	}
 	else if (kana_set == "digraphs_with_diacritics") {
 		column_prefixes = ["ya", "yu", "yo"];
@@ -346,7 +329,7 @@ function changeCheckboxTableState(this_id) {
 				if (temp_state == 1)
 					break;
 
-				// for all symbols except "n" and "vu"
+				// for all symbols except "n"
 				if (storage_symbols.symbols[k].kt == temp_id[0])
 					if (storage_symbols.symbols[k].ks == temp_id[1])
 						if (storage_symbols.symbols[k].kr == i)
@@ -358,13 +341,6 @@ function changeCheckboxTableState(this_id) {
 				if (storage_symbols.symbols[k].kt == temp_id[0])
 					if ((temp_id[1] == "mon") && (storage_symbols.symbols[k].ks == "mon"))
 						if (storage_symbols.symbols[k].kr == 10)
-							if (storage_symbols.symbols[k].se == 1)
-								temp_state = 1;
-
-				// for "vu" symbol
-				if ((temp_id[0] == "h") && (storage_symbols.symbols[k].kt == "h"))
-					if ((temp_id[1] == "mwd") && (storage_symbols.symbols[k].ks == "mwd"))
-						if (storage_symbols.symbols[k].kr == 5)
 							if (storage_symbols.symbols[k].se == 1)
 								temp_state = 1;
 			}
@@ -381,7 +357,7 @@ function changeCheckboxTableState(this_id) {
 	for (var i=0; i<temp_id[3]; i++)
 		for (var j=0; j<temp_id[4]; j++)
 			for (var k=0; k<storage_symbols.symbols.length; k++) {
-				// for all symbols except "n" and "vu"
+				// for all symbols except "n"
 				if (storage_symbols.symbols[k].kt == temp_id[0])
 					if (storage_symbols.symbols[k].ks == temp_id[1])
 						if (storage_symbols.symbols[k].kr == i)
@@ -393,12 +369,6 @@ function changeCheckboxTableState(this_id) {
 				if (storage_symbols.symbols[k].kt == temp_id[0])
 					if ((temp_id[1] == "mon") && (storage_symbols.symbols[k].ks == "mon"))
 						if (storage_symbols.symbols[k].kr == 10)
-							storage_symbols.symbols[k].se = new_state;
-
-				// for "vu" symbol
-				if ((temp_id[0] == "h") && (storage_symbols.symbols[k].kt == "h"))
-					if ((temp_id[1] == "mwd") && (storage_symbols.symbols[k].ks == "mwd"))
-						if (storage_symbols.symbols[k].kr == 5)
 							storage_symbols.symbols[k].se = new_state;
 			}
 

@@ -46,7 +46,7 @@ function initializeLocalStorage() {
 				}
 				else if (kana_set == 2) {
 					tmp_kana_set = "mwd"; // monographs_with_diacritics
-					tmp_rows = 6;
+					tmp_rows = 5;
 					tmp_columns = 5;
 				}
 				else {
@@ -60,13 +60,6 @@ function initializeLocalStorage() {
 					for (kana_column=0; kana_column<tmp_columns; kana_column++) {
 						// for "n" symbol skip the rest of the row
 						if ((kana_row == 10) && (kana_column == 1))
-							break;
-
-						// for "vu" symbol skip the rest of the row
-						if ((kana_row == 5) && (kana_column == 1))
-							if ((kana_set == 2) && (kana_type == 1))
-								break;
-						else if ((kana_row == 5) && (kana_set == 2) && (kana_type == 2))
 							break;
 
 
