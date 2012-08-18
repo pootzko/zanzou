@@ -194,6 +194,17 @@ div#flashcard_content {
 		1px 1px 0 #f4f2e6;
 }
 
+div#flashcard_content img {
+	margin-top: 32px;
+	opacity: 1.0;
+	cursor: default;
+}
+
+div#flashcard_content img:hover {
+	opacity: 0.85;
+	cursor: pointer;
+}
+
 div#flashcard_table {
     margin: 20px auto 0;
 	display: table;

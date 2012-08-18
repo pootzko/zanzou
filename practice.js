@@ -3,7 +3,9 @@ $(document).ready(function() {
 	storage_symbols = JSON.parse(localStorage.getItem("storage_symbols_obj"));
 	checked_storage_symbols = {"symbols": []};
 	correct_answer_index = 0;
+	flashcard_type = 1;
 
+	initializeSound();
 	setFlashcard();
 });
 
@@ -20,9 +22,34 @@ function setFlashcard() {
 		if (storage_symbols.symbols[i].se == 1)
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
 
+
+	randomizeFlashcardType();
+	console.log("using flashcard type " + flashcard_type);
+
 	// choose new flashcard
 	correct_answer_index = Math.floor(Math.random() * checked_storage_symbols.symbols.length);
-	var current_symbol = checked_storage_symbols.symbols[correct_answer_index].sy;
+	if (flashcard_type == 1)
+		var current_flashcard = checked_storage_symbols.symbols[correct_answer_index].sy;
+	else if (flashcard_type == 2)
+		var current_flashcard = checked_storage_symbols.symbols[correct_answer_index].ro;
+ 	else if (flashcard_type == 3) {
+		var sound_path = "sounds/" + String(checked_storage_symbols.symbols[correct_answer_index].ro) + ".mp3";
+		sound_path = sound_path.replace("*", "");
+		sound_path = sound_path.replace("o/", "");
+
+		soundManager.onready(function() {
+			soundManager.createSound({
+				id: "current_sound",
+				url: sound_path
+			});
+			soundManager.play("current_sound");
+		});
+
+ 		var current_flashcard = "" +
+			"<img src='images/play.png' " +
+			"	id='play_image' alt='play' " +
+			"	onClick='soundManager.play(\"current_sound\");' />";
+	}
 
 
 	var temp_row = checked_storage_symbols.symbols[correct_answer_index].kr;
@@ -33,10 +60,10 @@ function setFlashcard() {
 
 	// output flashcard
 	$("#flashcard_content").empty();
-	$("#flashcard_content").append(current_symbol);
+	$("#flashcard_content").append(current_flashcard);
 
 
-	initializeAnswers(checked_storage_symbols);
+	initializeAnswers();
 }
 
 
@@ -44,18 +71,24 @@ function setFlashcard() {
 
 
 // prepare answer boxes
-function initializeAnswers(checked_storage_symbols) {
+function initializeAnswers() {
 	console.log("initializing flashcard answers");
 	var storage_symbols_range = storage_symbols.symbols.length;
 	var answer_boxes = "";
-	var answers = [];
+	var answers = [], answers_ro = [], answers_sy = [];
 	var i=0, j=0, temp_index=0, skip_flag;
 
 
 	// prepare the correct answer
 	var random_index = Math.floor(Math.random() * $.cookie("difficulty"));
-	answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].ro;
-	console.log("correct flashcard answer set " + answers[random_index]);
+
+	if (flashcard_type == 1)
+		answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].ro;
+	else if ((flashcard_type == 2) || (flashcard_type == 3))
+		answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].sy;
+
+
+	console.log("correct flashcard answer set => " + answers[random_index]);
 
 
 	// prepare wrong answers
@@ -65,20 +98,52 @@ function initializeAnswers(checked_storage_symbols) {
 		// prepare incorrect answers if answers[i] is not the correct answer
 		if (i != random_index) {
 			current_symbol_index = Math.floor(Math.random() * storage_symbols_range);
-			answers[i] = storage_symbols.symbols[current_symbol_index].ro;
-			console.log("incorrect flashcard answer set " + answers[i]);
 
-			// skip repeated answers
+			answers_ro[i] = storage_symbols.symbols[current_symbol_index].ro;
+			answers_sy[i] = storage_symbols.symbols[current_symbol_index].sy;
+
+			if (flashcard_type == 1)
+				answers[i] = answers_ro[i];
+			else if ((flashcard_type == 2) || (flashcard_type == 3))
+				answers[i] = answers_sy[i];
+
+
+			//console.log("incorrect flashcard answer set => " + answers[i]);
+
+
+			// skip duplicate answers (duplicate answers with lower index than the index of the correct answers)
+			if (String(answers[i]) == String(answers[random_index])) {
+				skip_flag = 1;
+				console.log("skipping correct duplicate answer => " + answers[i]);
+			}
+
+
+			// skip duplicate answers (same incorrect answer appearing twice)
 			for (j=0; j<i; j++) {
 				if (String(answers[i]) == String(answers[j])) {
 					skip_flag = 1;
-					console.log("skipping " + answers[i]);
+					console.log("skipping duplicate symbol => " + answers[i]);
 				}
 			}
-			// skip empty symbol values
-			if (answers[i] == "")
-				skip_flag = 1;
 
+
+			// skip same roumaji written in different kana type (hiragana/katakana)
+			if ((flashcard_type == 2) || (flashcard_type == 3))
+				for (j=0; j<i; j++)
+					if (String(answers_ro[i]) == String(answers_ro[j])) {
+						skip_flag = 1;
+						console.log("skipping sound => " + answers_ro[i] + " " + answers_ro[j]);
+					}
+
+
+			// skip empty symbol values
+			if (answers[i] == "") {
+				skip_flag = 1;
+				console.log("skipping \"empty\" symbol");
+			}
+
+
+			// if flashcard answer is unique, set next flashcard
 			if (skip_flag != 1)
 				i++;
 		}
@@ -108,7 +173,13 @@ function initializeAnswers(checked_storage_symbols) {
 	for (i=0; i<($.cookie("difficulty") / 4); i++) {
 		answer_boxes += "<tr>";
 		for (j=0; j<4; j++) {
-			if (String(answers[temp_index]) == checked_storage_symbols.symbols[correct_answer_index].ro)
+			// set temporary answer
+			if (flashcard_type == 1)
+				tmp_answer = checked_storage_symbols.symbols[correct_answer_index].ro;
+			else if ((flashcard_type == 2) || (flashcard_type == 3))
+				tmp_answer = checked_storage_symbols.symbols[correct_answer_index].sy;
+
+			if (String(answers[temp_index]) == tmp_answer)
 				var answer_id = "correct_answer";
 			else
 				var answer_id = "answer_box_" + temp_index;
@@ -155,6 +226,7 @@ function onAnswerBoxClick(answer_id) {
 					temp_correct_state = 2;
 				}
 			}
+			soundManager.destroySound("current_sound");
 		}
 		// if the correct answer was not the first choice only increment total symbol count
 		else
@@ -184,6 +256,55 @@ function onAnswerBoxClick(answer_id) {
 	// if answered correctly, set next flashcard
 	if (temp_correct_state == 2)
 		setTimeout(function() { setFlashcard() }, 1000);
+}
+
+
+
+
+
+// randomize flashcard type for each flashcard
+function randomizeFlashcardType() {
+	var combination_sum = 0;
+
+	if ($.cookie("flashcard_type_ktr") == 1)
+		combination_sum += 1;
+	if ($.cookie("flashcard_type_rtk") == 1)
+		combination_sum += 2;
+	if ($.cookie("flashcard_type_vtk") == 1)
+		combination_sum += 4;
+
+
+	// if user unchecked all kana types, set flashcard_type_ktr to 1
+	if (combination_sum == 0)
+		$.cookie("flashcard_type_ktr", 1)
+
+
+	// randomly returns value 1, 2 or 3 based on selected kana flashcard types
+	if (combination_sum == 2)
+		flashcard_type = 2;
+	if (combination_sum == 3)
+		flashcard_type = Math.floor(Math.random() * 2) + 1;
+	if (combination_sum == 4)
+		flashcard_type = 3;
+	if (combination_sum == 5)
+		flashcard_type = Math.floor(Math.random() * 2) * 2 + 1;
+	if (combination_sum == 6)
+		flashcard_type = Math.floor(Math.random() * 2) + 2;
+	if (combination_sum == 7)
+		flashcard_type = Math.floor(Math.random() * 3) + 1;
+}
+
+
+
+
+
+
+function initializeSound() {
+	soundManager.setup({
+		url: "javascript_libs/soundmanager2/",
+		flashVersion: 9,
+		useFlashBlock: false
+	});
 }
 
 

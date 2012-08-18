@@ -16,16 +16,40 @@ function initializeOptions() {
 	var kana_type_selector = "hiragana";
 	var kana_set_selector = "monographs";
 
-	// default radio buttons
+
+	// set flaschard type tmp true/false values
+	if ($.cookie("flashcard_type_ktr") == 1)
+		var tmp_ktr_value = true;
+	else
+		var tmp_ktr_value = false;
+
+	if ($.cookie("flashcard_type_rtk") == 1)
+		var tmp_rtk_value = true;
+	else
+		var tmp_rtk_value = false
+
+	if ($.cookie("flashcard_type_vtk") == 1)
+		var tmp_vtk_value = true;
+	else
+		var tmp_vtk_value = false
+
+
+	// set difficulty radio button
 	$(difficulty_id).attr('checked', true);
-	$("#button_ktr").attr('checked', true);
+
+	// set kana flashcard type checkboxes
+	$("#button_ktr").attr('checked', tmp_ktr_value);
+	$("#button_rtk").attr('checked', tmp_rtk_value);
+	$("#button_vtk").attr('checked', tmp_vtk_value);
+
+	// set kana table type
 	$("#button_kt1").attr('checked', true);
 	$("#button_ks1").attr('checked', true);
 	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
 
 	initializeTableCheckboxes();
 
-	console.log("options initialized");
+	console.log("options initialized successfully");
 }
 
 
@@ -35,15 +59,29 @@ function initializeOptions() {
 // change difficulty cookie values
 function changeDifficulty(difficulty_value) {
 	$.cookie("difficulty", difficulty_value);
+	console.log("difficulty changed to => " + difficulty_value);
 }
 
 
 
 
 
-//
-function changeFlashcardType() {
+// set flashcard types to be used in testing
+function setFlashcardTypes(tmp_flashcard_id) {
+	if (tmp_flashcard_id == 1) {
+		var tmp_value = $.cookie("flashcard_type_ktr") * (-1) + 1;
+		$.cookie("flashcard_type_ktr", tmp_value);
+	}
+	if (tmp_flashcard_id == 2) {
+		var tmp_value = $.cookie("flashcard_type_rtk") * (-1) + 1;
+		$.cookie("flashcard_type_rtk", tmp_value);
+	}
+	if (tmp_flashcard_id == 3) {
+		var tmp_value = $.cookie("flashcard_type_vtk") * (-1) + 1;
+		$.cookie("flashcard_type_vtk", tmp_value);
+	}
 
+	console.log("flashcard_type [" + tmp_flashcard_id + "] set to => " + tmp_value);
 }
 
 
@@ -264,7 +302,7 @@ function changeCheckboxState(this_id) {
 
 	// save changes to storage_symbols_obj
 	localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-	console.log("table check changes stored to storage_symbols_obj " +
+	console.log("checkbox changes stored to storage_symbols_obj " +
 		"(" + temp_id + " => " + storage_symbols.symbols[i].se + ")");
 }
 
@@ -311,7 +349,7 @@ function changeCheckboxRowState(this_id) {
 
 	// save changes to storage_symbols_obj
 	localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-	console.log("table check changes stored to storage_symbols_obj " +
+	console.log("checkbox-row changes stored to storage_symbols_obj " +
 		"(" + temp_id + " => " + new_state + ")");
 
 	initializeTableCheckboxes();
@@ -382,7 +420,7 @@ function changeCheckboxTableState(this_id) {
 
 	// save changes to storage_symbols_obj
 	localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-	console.log("table check changes stored to storage_symbols_obj " +
+	console.log("checkbox-table changes stored to storage_symbols_obj " +
 		"(" + temp_id + " => " + new_state + ")");
 
 	initializeTableCheckboxes();

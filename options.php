@@ -29,9 +29,9 @@ require 'navigation.php';
 
 		<h3>Flashcard type</h3>
 		<form action="">
-			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" id="button_ktr" /> Kana to roumaji
-			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" id="button_rmk" /> Roumaji to kana
-			<input type='checkbox' name="flashcard_type" value="voice_to_kana" id="button_vtk" /> Voice to kana
+			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" id="button_ktr" onclick="setFlashcardTypes(1);" /> Kana to roumaji
+			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" id="button_rtk" onclick="setFlashcardTypes(2);" /> Roumaji to kana
+			<input type='checkbox' name="flashcard_type" value="voice_to_kana" id="button_vtk" onclick="setFlashcardTypes(3);" /> Voice to kana
 		</form>
 
 		<h3>Kana</h3>
