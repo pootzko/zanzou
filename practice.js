@@ -2,7 +2,7 @@ $(document).ready(function() {
 	initializeLocalStorage();
 	storage_symbols = JSON.parse(localStorage.getItem("storage_symbols_obj"));
 	storage_score = JSON.parse(localStorage.getItem("storage_score_obj"));
-	checked_storage_symbols = {"symbols": []};
+	checked_storage_symbols = {};
 	correct_answer_index = 0;
 	flashcard_type = 1;
 	temp_correct_state = 1; // used in onAnswerBoxClick()
@@ -30,15 +30,16 @@ function initializeSound() {
 
 // prepare flashcard
 function setFlashcard() {
+	checked_storage_symbols = {"symbols": []};
+
 	// single out chosen practice symbols
 	for (var i=0; i<storage_symbols.symbols.length; i++)
 		if (storage_symbols.symbols[i].se == 1)
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
 
-	//console.log(storage_symbols.symbols[188]);
-	//console.log(storage_symbols.symbols[44]);
 
 	randomizeFlashcardType();
+
 
 	// choose new flashcard
 	correct_answer_index = Math.floor(Math.random() * checked_storage_symbols.symbols.length);
@@ -66,7 +67,6 @@ function setFlashcard() {
 	}
 
 
-	console.log(checked_storage_symbols.symbols[correct_answer_index]);
 	// output flashcard
 	$("#flashcard_content").empty();
 	$("#flashcard_content").append(current_flashcard);
@@ -81,10 +81,11 @@ function setFlashcard() {
 
 // prepare answer boxes
 function initializeAnswers() {
-	var storage_symbols_range = storage_symbols.symbols.length;
+	var storage_symbols_length = storage_symbols.symbols.length;
+	var checked_symbols_length = checked_storage_symbols.symbols.length;
 	var answer_boxes = "";
 	var answers = [], answers_ro = [], answers_sy = [];
-	var i=0, j=0, temp_index=0, skip_flag;
+	var i=1, temp_index=0, checked_symbols_counter=0, skip_flag;
 
 	// used in onAnswerBoxClick()
 	// 1 => not answered yet
@@ -94,61 +95,64 @@ function initializeAnswers() {
 
 
 	// prepare the correct answer
-	var random_index = Math.floor(Math.random() * $.cookie("difficulty"));
-
 	if (flashcard_type == 1)
-		answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].ro;
+		answers[0] = checked_storage_symbols.symbols[correct_answer_index].ro;
 	else if ((flashcard_type == 2) || (flashcard_type == 3))
-		answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].sy;
+		answers[0] = checked_storage_symbols.symbols[correct_answer_index].sy;
 
 
 	// prepare wrong answers
-	while (i<$.cookie("difficulty")) {
+	while (i < $.cookie("difficulty")) {
 		skip_flag = 0;
 
+
 		// prepare incorrect answers if answers[i] is not the correct answer
-		if (i != random_index) {
-			current_symbol_index = Math.floor(Math.random() * storage_symbols_range);
+		if (checked_symbols_counter < (checked_symbols_length - 1)) {
+			current_symbol_index = Math.floor(Math.random() * checked_symbols_length);
+
+			answers_ro[i] = checked_storage_symbols.symbols[current_symbol_index].ro;
+			answers_sy[i] = checked_storage_symbols.symbols[current_symbol_index].sy;
+		}
+		else {
+			current_symbol_index = Math.floor(Math.random() * storage_symbols_length);
 
 			answers_ro[i] = storage_symbols.symbols[current_symbol_index].ro;
 			answers_sy[i] = storage_symbols.symbols[current_symbol_index].sy;
-
-			if (flashcard_type == 1)
-				answers[i] = answers_ro[i];
-			else if ((flashcard_type == 2) || (flashcard_type == 3))
-				answers[i] = answers_sy[i];
+		}
 
 
-			// skip duplicate answers (duplicate answers with lower index than the index of the correct answers)
-			if (String(answers[i]) == String(answers[random_index]))
+		if (flashcard_type == 1)
+			answers[i] = answers_ro[i];
+		else if ((flashcard_type == 2) || (flashcard_type == 3))
+			answers[i] = answers_sy[i];
+
+
+		// skip duplicate answers (same incorrect answer appearing twice)
+		for (var j=0; j<i; j++)
+			if (answers[i] == answers[j])
 				skip_flag = 1;
 
-
-			// skip duplicate answers (same incorrect answer appearing twice)
-			for (j=0; j<i; j++)
-				if (String(answers[i]) == String(answers[j]))
+		// skip same roumaji written in different kana type (hiragana/katakana)
+		if ((flashcard_type == 2) || (flashcard_type == 3))
+			for (var j=0; j<i; j++)
+				if (answers_ro[i] == answers_ro[j])
 					skip_flag = 1;
 
-
-			// skip same roumaji written in different kana type (hiragana/katakana)
-			if ((flashcard_type == 2) || (flashcard_type == 3))
-				for (j=0; j<i; j++)
-					if (String(answers_ro[i]) == String(answers_ro[j]))
-						skip_flag = 1;
+		// skip empty symbol values
+		if (answers[i] == "")
+			skip_flag = 1;
 
 
-			// skip empty symbol values
-			if (answers[i] == "")
-				skip_flag = 1;
-
-
-			// if flashcard answer is unique, set next flashcard
-			if (skip_flag != 1)
-				i++;
-		}
-		else
+		// if flashcard answer is unique, set next flashcard
+		if (skip_flag != 1) {
+			checked_symbols_counter++;
 			i++;
+		}
 	}
+
+
+	// randomize answer positions
+	answers = randomizeArrayIndexes(answers);
 
 
 	// prepare correct and answer count information
@@ -211,6 +215,7 @@ function onAnswerBoxClick(answer_id) {
 	// on answering correctly change box color and increse count
 	if (answer_id == "correct_answer") {
 		$("#" + answer_id).css('background-color', "#207947");
+		console.log("bla2");
 
 		// if the correct answer was the first choice increment both correct and total count
 		if (temp_correct_state == 1) {
@@ -271,7 +276,8 @@ function onAnswerBoxClick(answer_id) {
 
 	// if answered correctly, set next flashcard
 	if (temp_correct_state == 2) {
-		soundManager.destroySound("current_sound");
+		if (flashcard_type == 3)
+			soundManager.destroySound("current_sound");
 		setTimeout(function() { setFlashcard() }, 1000);
 	}
 }
@@ -383,5 +389,17 @@ function generateSuccessRatesTable() {
 
 
 
+// randomize array indexes (used to shuffle answers in answer table)
+function randomizeArrayIndexes(my_array) {
+	var i = my_array.length;
 
+	while (--i) {
+		var j = Math.floor(Math.random() * (i + 1));
+		var temp_i = my_array[i];
+		var temp_j = my_array[j];
+		my_array[i] = temp_j;
+		my_array[j] = temp_i;
+	}
 
+	return my_array;
+}

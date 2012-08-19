@@ -20,6 +20,9 @@ intelligent algorithm implementation
 CHANGELOG HISTORY:
 --------------
 
+v0.3.1
+changed answer selection (prioritize answers from the checked kana pool)
+
 v0.3.0
 kana table bug fixes
 flashcard answers bugfix (duplicated answers)
