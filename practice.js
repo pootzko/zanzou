@@ -1,9 +1,11 @@
 $(document).ready(function() {
 	initializeLocalStorage();
 	storage_symbols = JSON.parse(localStorage.getItem("storage_symbols_obj"));
+	storage_score = JSON.parse(localStorage.getItem("storage_score_obj"));
 	checked_storage_symbols = {"symbols": []};
 	correct_answer_index = 0;
 	flashcard_type = 1;
+	temp_correct_state = 1; // used in onAnswerBoxClick()
 
 	initializeSound();
 	setFlashcard();
@@ -13,18 +15,30 @@ $(document).ready(function() {
 
 
 
+// initialize soundmanager2
+function initializeSound() {
+	soundManager.setup({
+		url: "javascript_libs/soundmanager2/",
+		flashVersion: 9,
+		useFlashBlock: false
+	});
+}
+
+
+
+
+
 // prepare flashcard
 function setFlashcard() {
-	console.log("initializing new flashcard");
-
 	// single out chosen practice symbols
 	for (var i=0; i<storage_symbols.symbols.length; i++)
 		if (storage_symbols.symbols[i].se == 1)
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
 
+	//console.log(storage_symbols.symbols[188]);
+	//console.log(storage_symbols.symbols[44]);
 
 	randomizeFlashcardType();
-	console.log("using flashcard type " + flashcard_type);
 
 	// choose new flashcard
 	correct_answer_index = Math.floor(Math.random() * checked_storage_symbols.symbols.length);
@@ -52,12 +66,7 @@ function setFlashcard() {
 	}
 
 
-	var temp_row = checked_storage_symbols.symbols[correct_answer_index].kr;
-	var temp_column = checked_storage_symbols.symbols[correct_answer_index].kc;
-	var temp_type = checked_storage_symbols.symbols[correct_answer_index].kt;
-	console.log("flashcard initialized => monographs[" + temp_row + "][" + temp_column + "][" + temp_type + "]");
-
-
+	console.log(checked_storage_symbols.symbols[correct_answer_index]);
 	// output flashcard
 	$("#flashcard_content").empty();
 	$("#flashcard_content").append(current_flashcard);
@@ -72,11 +81,16 @@ function setFlashcard() {
 
 // prepare answer boxes
 function initializeAnswers() {
-	console.log("initializing flashcard answers");
 	var storage_symbols_range = storage_symbols.symbols.length;
 	var answer_boxes = "";
 	var answers = [], answers_ro = [], answers_sy = [];
 	var i=0, j=0, temp_index=0, skip_flag;
+
+	// used in onAnswerBoxClick()
+	// 1 => not answered yet
+	// 0 => answered wrongly
+	// 2 => answered correctly
+	temp_correct_state = 1;
 
 
 	// prepare the correct answer
@@ -86,9 +100,6 @@ function initializeAnswers() {
 		answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].ro;
 	else if ((flashcard_type == 2) || (flashcard_type == 3))
 		answers[random_index] = checked_storage_symbols.symbols[correct_answer_index].sy;
-
-
-	console.log("correct flashcard answer set => " + answers[random_index]);
 
 
 	// prepare wrong answers
@@ -108,39 +119,27 @@ function initializeAnswers() {
 				answers[i] = answers_sy[i];
 
 
-			//console.log("incorrect flashcard answer set => " + answers[i]);
-
-
 			// skip duplicate answers (duplicate answers with lower index than the index of the correct answers)
-			if (String(answers[i]) == String(answers[random_index])) {
+			if (String(answers[i]) == String(answers[random_index]))
 				skip_flag = 1;
-				console.log("skipping correct duplicate answer => " + answers[i]);
-			}
 
 
 			// skip duplicate answers (same incorrect answer appearing twice)
-			for (j=0; j<i; j++) {
-				if (String(answers[i]) == String(answers[j])) {
+			for (j=0; j<i; j++)
+				if (String(answers[i]) == String(answers[j]))
 					skip_flag = 1;
-					console.log("skipping duplicate symbol => " + answers[i]);
-				}
-			}
 
 
 			// skip same roumaji written in different kana type (hiragana/katakana)
 			if ((flashcard_type == 2) || (flashcard_type == 3))
 				for (j=0; j<i; j++)
-					if (String(answers_ro[i]) == String(answers_ro[j])) {
+					if (String(answers_ro[i]) == String(answers_ro[j]))
 						skip_flag = 1;
-						console.log("skipping sound => " + answers_ro[i] + " " + answers_ro[j]);
-					}
 
 
 			// skip empty symbol values
-			if (answers[i] == "") {
+			if (answers[i] == "")
 				skip_flag = 1;
-				console.log("skipping \"empty\" symbol");
-			}
 
 
 			// if flashcard answer is unique, set next flashcard
@@ -150,25 +149,25 @@ function initializeAnswers() {
 		else
 			i++;
 	}
-	console.log("incorrect flashcard answers set");
 
 
 	// prepare correct and answer count information
-	var correct_answers_count = checked_storage_symbols.symbols[correct_answer_index].co;
-	var total_answers_count = checked_storage_symbols.symbols[correct_answer_index].to;
+	var correct_answers_count = storage_score.correct;
+	var total_answers_count = storage_score.total;
 	if (total_answers_count != 0)
-		var success_rate_percentage = "(" +(correct_answers_count / total_answers_count * 100).toPrecision(4) + "%)";
+		var success_rate_percentage = "(" + (correct_answers_count / total_answers_count * 100).toPrecision(4) + "%)";
 	else
 		var success_rate_percentage = "";
 
 
 	// generate answers table and add success rate information to it
-	var success_rate = "SUCCESS RATE: " + correct_answers_count + "/" + total_answers_count + " " + success_rate_percentage;
+	var success_rate = "Success rate: " + correct_answers_count + "/" + total_answers_count + " " + success_rate_percentage;
 	answer_boxes += "<table>" +
 		"<tr>" +
 		"	<td id='score' class='answers_table_header' colspan='3'>" + success_rate + "</td>" +
-		"	<td class='answers_table_header'><a href='/practice.php'>skip</a></td>" +
+		"	<td class='answers_table_header'><a href='practice.php'>skip</a></td>" +
 		"</tr>";
+
 
 	for (i=0; i<($.cookie("difficulty") / 4); i++) {
 		answer_boxes += "<tr>";
@@ -193,7 +192,9 @@ function initializeAnswers() {
 		answer_boxes += "</tr>";
 	}
 	answer_boxes += "</table>";
-	console.log("flashcard answers initialized successfully");
+
+
+	generateSuccessRatesTable();
 
 
 	// output flashcard answers
@@ -207,12 +208,6 @@ function initializeAnswers() {
 
 // actions to execute on answering
 function onAnswerBoxClick(answer_id) {
-	// 1 => not answered yet
-	// 0 => answered wrongly
-	// 2 => answered correctly
-	var temp_correct_state = 1;
-
-
 	// on answering correctly change box color and increse count
 	if (answer_id == "correct_answer") {
 		$("#" + answer_id).css('background-color', "#207947");
@@ -221,26 +216,48 @@ function onAnswerBoxClick(answer_id) {
 		if (temp_correct_state == 1) {
 			for (var i=0; i<storage_symbols.symbols.length; i++) {
 				if (storage_symbols.symbols[i].sy == checked_storage_symbols.symbols[correct_answer_index].sy) {
-					storage_symbols.symbols[i].co++;
-					storage_symbols.symbols[i].to++;
+					if (flashcard_type == 1) {
+						storage_symbols.symbols[i].ck++;
+						storage_symbols.symbols[i].tk++;
+					}
+					else if (flashcard_type == 2) {
+						storage_symbols.symbols[i].cr++;
+						storage_symbols.symbols[i].tr++;
+					}
+					else if (flashcard_type == 3) {
+						storage_symbols.symbols[i].cv++;
+						storage_symbols.symbols[i].tv++;
+					}
+
+					storage_score.correct++;
+					storage_score.total++;
+
 					temp_correct_state = 2;
 				}
 			}
-			soundManager.destroySound("current_sound");
 		}
-		// if the correct answer was not the first choice only increment total symbol count
+		// if the correct answer was not the first answer, go to next flashcard
 		else
-			storage_symbols.symbols[i].to++;
+			temp_correct_state = 2;
 	}
-	// on answering incorrectly change box color and increse count
+	// on answering incorrectly change box color and increse total count
 	else {
 		$("#" + answer_id).css('background-color', "#c32918");
 
+		// increse total count only if answered wrongly on first try
 		if (temp_correct_state == 1) {
 			for (var i=0; i<storage_symbols.symbols.length; i++) {
 				if (storage_symbols.symbols[i].sy == checked_storage_symbols.symbols[correct_answer_index].sy)
-					storage_symbols.symbols[i].to++;
+					if (flashcard_type == 1)
+						storage_symbols.symbols[i].tk++;
+					else if (flashcard_type == 2)
+						storage_symbols.symbols[i].tr++;
+					else if (flashcard_type == 3)
+						storage_symbols.symbols[i].tv++;
+
 			}
+
+			storage_score.total++;
 		}
 
 		temp_correct_state = 0;
@@ -249,13 +266,14 @@ function onAnswerBoxClick(answer_id) {
 
 	// save changes to storage_symbols_obj
 	localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-	console.log("table check changes stored to storage_symbols_obj " +
-		"(" + correct_answer_index + " => " + checked_storage_symbols.symbols[correct_answer_index].se + ")");
+	localStorage.setItem("storage_score_obj", JSON.stringify(storage_score));
 
 
 	// if answered correctly, set next flashcard
-	if (temp_correct_state == 2)
+	if (temp_correct_state == 2) {
+		soundManager.destroySound("current_sound");
 		setTimeout(function() { setFlashcard() }, 1000);
+	}
 }
 
 
@@ -298,13 +316,67 @@ function randomizeFlashcardType() {
 
 
 
+// prepare and output succes rates for current flashcard
+function generateSuccessRatesTable() {
+	// prepare kana to roumaji score
+	var correct_kana_count = checked_storage_symbols.symbols[correct_answer_index].ck;
+	var total_kana_count = checked_storage_symbols.symbols[correct_answer_index].tk;
 
-function initializeSound() {
-	soundManager.setup({
-		url: "javascript_libs/soundmanager2/",
-		flashVersion: 9,
-		useFlashBlock: false
-	});
+	if (total_kana_count != 0)
+		var kana_succes_percentage = " (" + (correct_kana_count / total_kana_count * 100).toPrecision(4) + "%)";
+	else
+		var kana_succes_percentage = "";
+
+
+	// prepare roumaji to kana score
+	var correct_roumaji_count = checked_storage_symbols.symbols[correct_answer_index].cr;
+	var total_roumaji_count = checked_storage_symbols.symbols[correct_answer_index].tr;
+
+	if (total_roumaji_count != 0)
+		var roumaji_succes_percentage = " (" + (correct_roumaji_count / total_roumaji_count * 100).toPrecision(4) + "%)";
+	else
+		var roumaji_succes_percentage = "";
+
+
+	// prepare voice to kana score
+	var correct_voice_count = checked_storage_symbols.symbols[correct_answer_index].cv;
+	var total_voice_count = checked_storage_symbols.symbols[correct_answer_index].tv;
+
+	if (total_voice_count != 0)
+		var voice_succes_percentage = " (" + (correct_voice_count / total_voice_count * 100).toPrecision(4) + "%)";
+	else
+		var voice_succes_percentage = "";
+
+
+	// prepare average score
+	var correct_average_count = correct_kana_count + correct_roumaji_count + correct_voice_count;
+	var total_average_count = total_kana_count + total_roumaji_count + total_voice_count;
+
+	if (total_average_count != 0)
+		var average_succes_percentage = " (" + (correct_average_count / total_average_count * 100).toPrecision(4) + "%)";
+	else
+		var average_succes_percentage = "";
+
+
+	var succes_rates_table = "" +
+		"<table>" +
+		"	<th>Kana to roumaji:</th>" +
+		"		<tr><td>• " + correct_kana_count + "/" + total_kana_count + kana_succes_percentage + "</td></tr>" +
+		"		<tr><td class='score_padding'></td></tr>" +
+		"	<th>Roumaji to kana:</th>" +
+		"		<tr><td>• " + correct_roumaji_count + "/" + total_roumaji_count + roumaji_succes_percentage + "</td></tr>" +
+		"		<tr><td class='score_padding'></td></tr>" +
+		"	<th>Voice to kana:</th>" +
+		"		<tr><td>• " + correct_voice_count + "/" + total_voice_count + voice_succes_percentage + "</td></tr>" +
+		"		<tr><td class='score_padding'></td></tr>" +
+		"		<tr><td class='score_padding'></td></tr>" +
+		"	<th>Average:</th>" +
+		"		<tr><td>• " + correct_average_count + "/" + total_average_count + average_succes_percentage + "</td></tr>" +
+		"</table>";
+
+
+	$("#score_table_holder").empty();
+	$("#score_table_holder").append(succes_rates_table);
 }
 
 

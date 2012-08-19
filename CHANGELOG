@@ -28,6 +28,8 @@ v0.2.11
 kana table bug fixes
 flashcard answers bugfix (duplicated answers)
 implemented sound to kana option functionality
+implemented personal statistics functionality
+rearranged header js lib defining
 
 v0.2.10
 added LICENSE.txt and CHANGELOG files

@@ -12,18 +12,25 @@ function initializeLocalStorage() {
 	* 	kana_roumaji: value,
 	* 	kana_symbol: value,
 	* 	selected: value,
-	* 	correct: value,
-	* 	total: value,
+	* 	correct_kana: value,
+	* 	total_kana: value,
+	* 	correct_roumaji: value,
+	* 	total_roumaji: value,
+	* 	correct_voice: value,
+	* 	total_voice: value,
 	* 	range_low: value,
 	* 	range_high: value
 	* ]}
 	*
+	*
+	* storage_score = {"correct": value, "total", value}
+	*
+	*
 	*/
 
 
+	// prepare symbols localstorage object
 	if (localStorage.getItem("storage_symbols_obj") == null) {
-		console.log("storage_symbols_obj does not exist, initializing new storage_symbols_obj");
-
 		var storage_symbols = {"symbols": []};
 
 		for (kana_type=1; kana_type<3; kana_type++) {
@@ -89,7 +96,9 @@ function initializeLocalStorage() {
 							if (
 								((kana_row == 7) && (kana_column == 1)) ||
 								((kana_row == 7) && (kana_column == 3)) ||
-								((kana_row == 9) && (kana_column == 2))
+								((kana_row == 9) && (kana_column == 1)) ||
+								((kana_row == 9) && (kana_column == 2)) ||
+								((kana_row == 9) && (kana_column == 3))
 							)
 								kana_selected = null;
 
@@ -102,8 +111,12 @@ function initializeLocalStorage() {
 								"ro": kana_roumaji,
 								"sy": kana_symbol,
 								"se": kana_selected,
-								"co": 0,
-								"to": 0,
+								"ck": 0,
+								"tk": 0,
+								"cr": 0,
+								"tr": 0,
+								"cv": 0,
+								"tv": 0,
 								"rl": 0,
 								"rh": 0
 						};
@@ -122,10 +135,14 @@ function initializeLocalStorage() {
 
 		// save changes to storage_symbols_obj
 		localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-		console.log("new storage_symbols_obj initialized");
 	}
-	else
-		console.log("storage_symbols_obj already exists");
+
+
+	// prepare score localstorage object
+	if (localStorage.getItem("storage_score_obj") == null) {
+		var storage_score = {"correct": 0, "total": 0};
+		localStorage.setItem("storage_score_obj", JSON.stringify(storage_score));
+	}
 }
 
 

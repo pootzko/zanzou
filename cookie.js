@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	console.log("initializing cookie");
-
 	// difficulty:
 	// 4 => beginner
 	// 8 => intermediate
@@ -20,8 +18,5 @@ $(document).ready(function() {
 		$.cookie("flashcard_type_rtk", 0);
 	if ($.cookie("flashcard_type_vtk") == null)
 		$.cookie("flashcard_type_vtk", 0);
-
-
-	console.log("cookie initialized successfully");
 });
 

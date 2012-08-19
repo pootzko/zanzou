@@ -43,6 +43,10 @@ div#logo_holder {
 	padding-top: 15px
 }
 
+div#logo_holder a {
+	color: #4a4945;
+}
+
 div#header_kanji {
 	width: auto;
 	padding-left: 125px;
@@ -125,12 +129,6 @@ div#kana_table table, tr, td, th {
 	text-align: left;
 }
 
-div#kana_table td {
-	width: 96px;
-	height: 24px;
-	padding-left: 8px;
-}
-
 div#kana_table tr {
 }
 
@@ -138,6 +136,12 @@ div#kana_table th {
 	padding-left: 30px;
 	background-color: #575652;
 	color: #f4f2e6;
+}
+
+div#kana_table td {
+	width: 96px;
+	height: 24px;
+	padding-left: 8px;
 }
 
 div#kana_table tr.table_symbol:nth-child(odd) {
@@ -167,7 +171,8 @@ div#kana_table td.row_checkbox {
 }
 
 div#test {
-	width: 600px;
+	width: 500px;
+	float: left;
 	margin-bottom: 20px;
 	padding-top: 60px;
 }
@@ -184,7 +189,7 @@ div#flashcard_content {
 	vertical-align: middle;
 	background-image: url("images/circle.png");
 	background-repeat: no-repeat;
-	font-size: 9em;
+	font-size: 8em;
 	text-align: center;
 	color: #313236;
     text-shadow:
@@ -239,6 +244,42 @@ div#flashcard_table td.answers_table_header, td.answers_table_header:hover, td.a
 	background-color: #E5E0C3;
 	color: #4a4945;
 	font-weight: bold;
+}
+
+div#score_table_holder {
+	width: 200px;
+	height: 300px;
+	margin: 70px 0 0 0;
+	float: left;
+}
+
+div#score_table_holder table {
+	font-size: 0.9em;
+}
+
+div#score_table_holder tr {
+	height: 22px;
+}
+
+div#score_table_holder th {
+	padding: 0px 22px 0 11px;
+	background-color: #575652;
+	color: #f4f2e6;
+}
+
+div#score_table_holder td {
+	padding: 0px 22px 0 11px;
+	background-color: #e5e0c3;
+	font-weight: bold;
+}
+
+div#score_table_holder td.score_padding {
+	background-color: transparent;
+	height: 18px;
+}
+
+div#separator {
+	clear: both;
 }
 
 div#footer {

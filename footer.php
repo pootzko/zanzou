@@ -3,5 +3,5 @@
 		</div> <!-- /FOOTER -->
 	</div> <!-- /CONTENT_HOLDER -->
 </div> <!-- /WRAPPER -->
-</body>
+</body> <!-- /BODY -->
 </html>

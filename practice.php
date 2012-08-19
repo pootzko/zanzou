@@ -1,7 +1,4 @@
-<?php
-require 'header.php';
-require 'navigation.php';
-?>
+<?php require 'head.php'; ?>
 
 <script type="text/javascript" src="javascript_libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="javascript_libs/jquery.cookie.js"></script>
@@ -10,6 +7,11 @@ require 'navigation.php';
 <script type="text/javascript" src="cookie.js"></script>
 <script type="text/javascript" src="practice.js"></script>
 <script type="text/javascript" src="kana.js"></script>
+
+<?php
+require 'header.php';
+require 'navigation.php';
+?>
 
 
 
@@ -22,6 +24,9 @@ require 'navigation.php';
 		</div>
 		<div id="flashcard_table"></div>
 	</div>
+	<div id="score_table_holder">
+	</div>
+	<div id="separator"></div>
 </div> <!-- /CONTENT -->
 
 

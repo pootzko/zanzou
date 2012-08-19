@@ -11,7 +11,6 @@ $(document).ready(function() {
 
 // initialize option values from cookie
 function initializeOptions() {
-	console.log("initializing options");
 	var difficulty_id = "#button_df" + $.cookie("difficulty");
 	var kana_type_selector = "hiragana";
 	var kana_set_selector = "monographs";
@@ -48,8 +47,6 @@ function initializeOptions() {
 	$("#kana_table").append(generateTable(kana_type_selector, kana_set_selector));
 
 	initializeTableCheckboxes();
-
-	console.log("options initialized successfully");
 }
 
 
@@ -59,7 +56,6 @@ function initializeOptions() {
 // change difficulty cookie values
 function changeDifficulty(difficulty_value) {
 	$.cookie("difficulty", difficulty_value);
-	console.log("difficulty changed to => " + difficulty_value);
 }
 
 
@@ -80,8 +76,6 @@ function setFlashcardTypes(tmp_flashcard_id) {
 		var tmp_value = $.cookie("flashcard_type_vtk") * (-1) + 1;
 		$.cookie("flashcard_type_vtk", tmp_value);
 	}
-
-	console.log("flashcard_type [" + tmp_flashcard_id + "] set to => " + tmp_value);
 }
 
 
@@ -120,7 +114,6 @@ function changeKanaTable() {
 
 // generate kana selected tables
 function generateTable(kana_type, kana_set) {
-	console.log("generating kana table");
 	var rows, columns, column_prefixes, row_prefixes, symbols;
 	var table_header_row, table_header_column;
 	var checkbox_id_prefix = "", special = "";
@@ -164,7 +157,7 @@ function generateTable(kana_type, kana_set) {
 			"	<td class='row_checkbox'>" +
 			"		<a href='javascript:;'" +
 			"		onclick='changeCheckboxRowState(\"" + checkbox_id_prefix + 10 + "_row_" + columns + "\");" +
-			"		return false;'>x</a>" +
+			"		return false;'>&#10004;</a>" +
 			"	</td>" +
 			"</tr>";
 	}
@@ -205,7 +198,7 @@ function generateTable(kana_type, kana_set) {
 	table_header_row += "" +
 		"<td class='row_checkbox'><a href='javascript:;'" +
 		"onclick='changeCheckboxTableState(\"" + checkbox_id_prefix + "table_" + rows + "_" + columns + "\");" +
-		"return false;'>x</a></td>";
+		"return false;'>&#10004;</a></td>";
 	table_header_row += "</tr>";
 	table_content += table_header_row;
 
@@ -217,7 +210,6 @@ function generateTable(kana_type, kana_set) {
 		// table content
 		for (j=0; j<columns; j++) {
 			var checkbox_id = checkbox_id_prefix + i + "_" + j;
-			//console.log(checkbox_id);
 
 			table_content += "<td>";
 			if (symbols[i][j][k] != "") {
@@ -237,7 +229,7 @@ function generateTable(kana_type, kana_set) {
 			"<td class='row_checkbox'>" +
 			"	<a href='javascript:;'" +
 			"	onclick='changeCheckboxRowState(\"" + checkbox_id_prefix + i + "_row_" + columns + "\");" +
-			"	return false;'>x</a>" +
+			"	return false;'>&#10004;</a>" +
 			"</td></tr>";
 	}
 
@@ -246,7 +238,6 @@ function generateTable(kana_type, kana_set) {
 		table_content += special;
 
 
-	console.log("kana table generated successfully");
 	return table_content += "</table>";
 }
 
@@ -256,7 +247,6 @@ function generateTable(kana_type, kana_set) {
 
 // check/uncheck selected checkboxes
 function initializeTableCheckboxes() {
-	console.log("initializing table checkboxes");
 	for (i=0; i<storage_symbols.symbols.length; i++) {
 		var checkbox_id = "#";
 
@@ -274,7 +264,6 @@ function initializeTableCheckboxes() {
 		else
 			$(checkbox_id).attr('checked', false);
 	}
-	console.log("table checkboxes initialized successfully");
 }
 
 
@@ -283,7 +272,6 @@ function initializeTableCheckboxes() {
 
 // change single-checkbox state on click
 function changeCheckboxState(this_id) {
-	console.log("initializing checkbox state change");
 	var temp_id = this_id.split("_");
 
 
@@ -302,8 +290,6 @@ function changeCheckboxState(this_id) {
 
 	// save changes to storage_symbols_obj
 	localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-	console.log("checkbox changes stored to storage_symbols_obj " +
-		"(" + temp_id + " => " + storage_symbols.symbols[i].se + ")");
 }
 
 
@@ -312,7 +298,6 @@ function changeCheckboxState(this_id) {
 
 // change checkbox-row state on click
 function changeCheckboxRowState(this_id) {
-	console.log("initializing checkbox-row state change");
 	// temp_id model: kana_type, kana_set, row, "row", columns
 	var temp_id = this_id.split("_");
 	var temp_state = 0, new_state;
@@ -349,8 +334,7 @@ function changeCheckboxRowState(this_id) {
 
 	// save changes to storage_symbols_obj
 	localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-	console.log("checkbox-row changes stored to storage_symbols_obj " +
-		"(" + temp_id + " => " + new_state + ")");
+
 
 	initializeTableCheckboxes();
 }
@@ -361,7 +345,6 @@ function changeCheckboxRowState(this_id) {
 
 // change checkbox-table state on click
 function changeCheckboxTableState(this_id) {
-	console.log("initializing checkbox-table state change");
 	// temp_id model: kana_type, kana_set, "table", rows, columns
 	var temp_id = this_id.split("_");
 	var temp_state = 0, new_state;
@@ -420,8 +403,7 @@ function changeCheckboxTableState(this_id) {
 
 	// save changes to storage_symbols_obj
 	localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
-	console.log("checkbox-table changes stored to storage_symbols_obj " +
-		"(" + temp_id + " => " + new_state + ")");
+
 
 	initializeTableCheckboxes();
 }
