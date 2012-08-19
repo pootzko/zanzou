@@ -13,10 +13,6 @@ statistics implementation
 v0.3.0
 intelligent algorithm implementation
 
-v0.2.x
-implement all options checkbox functionality
-implement sound
-
 
 
 
@@ -24,7 +20,7 @@ implement sound
 CHANGELOG HISTORY:
 --------------
 
-v0.2.11
+v0.3.0
 kana table bug fixes
 flashcard answers bugfix (duplicated answers)
 implemented sound to kana option functionality
