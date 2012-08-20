@@ -22,6 +22,7 @@ CHANGELOG HISTORY:
 
 v0.3.1
 changed answer selection (prioritize answers from the checked kana pool)
+implemented weighted symbol (flashcard) selection
 
 v0.3.0
 kana table bug fixes
@@ -29,6 +30,7 @@ flashcard answers bugfix (duplicated answers)
 implemented sound to kana option functionality
 implemented personal statistics functionality
 rearranged header js lib defining
+added homepage text/info
 
 v0.2.10
 added LICENSE.txt and CHANGELOG files

@@ -30,6 +30,10 @@ function initializeSound() {
 
 // prepare flashcard
 function setFlashcard() {
+	var tmp_low_range = 0, tmp_high_range = 0, tmp_range_value = 0;
+	var unpractised_coefficient = 3;
+	var flawless_coefficient = 1;
+	var practised_coefficient = 4;
 	checked_storage_symbols = {"symbols": []};
 
 	// single out chosen practice symbols
@@ -38,11 +42,39 @@ function setFlashcard() {
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
 
 
+	// set symbol appearance probabilities
+	for (var i=0; i<checked_storage_symbols.symbols.length; i++) {
+		var success_rate_percentage = calculateSuccessRate(i);
+
+		tmp_low_range = tmp_high_range;
+		// symbols that have not been practised yet
+		if (success_rate_percentage == 0)
+			tmp_high_range += checked_storage_symbols.symbols.length / unpractised_coefficient;
+		else if (success_rate_percentage == 1)
+			tmp_high_range += flawless_coefficient;
+		else
+			tmp_high_range += (checked_storage_symbols.symbols.length * (1 - success_rate_percentage)) * practised_coefficient;
+
+		 checked_storage_symbols.symbols[i].lr = Math.floor(tmp_low_range * 100) / 100;
+		 checked_storage_symbols.symbols[i].hr = Math.floor(tmp_high_range * 100) / 100;
+	}
+
+
 	randomizeFlashcardType();
 
 
 	// choose new flashcard
-	correct_answer_index = Math.floor(Math.random() * checked_storage_symbols.symbols.length);
+	tmp_range_value = Math.floor(Math.random() * tmp_high_range);
+
+	// find the symbol within given range
+	for (var i=0; i<checked_storage_symbols.symbols.length; i++) {
+		if ((checked_storage_symbols.symbols[i].lr <= tmp_range_value) && (checked_storage_symbols.symbols[i].hr > tmp_range_value)) {
+			correct_answer_index = i;
+			break;
+		}
+	}
+
+	// set current flashcard
 	if (flashcard_type == 1)
 		var current_flashcard = checked_storage_symbols.symbols[correct_answer_index].sy;
 	else if (flashcard_type == 2)
@@ -57,7 +89,7 @@ function setFlashcard() {
 				id: "current_sound",
 				url: sound_path
 			});
-			soundManager.play("current_sound");
+			setTimeout(function() { soundManager.play("current_sound") }, 300);
 		});
 
  		var current_flashcard = "" +
@@ -84,8 +116,9 @@ function initializeAnswers() {
 	var storage_symbols_length = storage_symbols.symbols.length;
 	var checked_symbols_length = checked_storage_symbols.symbols.length;
 	var answer_boxes = "";
-	var answers = [], answers_ro = [], answers_sy = [];
-	var i=1, temp_index=0, checked_symbols_counter=0, skip_flag;
+	var answers = [], answers_ro = [], answers_sy = [], answers_tmp = [];
+	var tmp_index = 0, checked_symbols_counter = 0, skip_flag = 0, different_sounds_count, i;
+
 
 	// used in onAnswerBoxClick()
 	// 1 => not answered yet
@@ -94,20 +127,28 @@ function initializeAnswers() {
 	temp_correct_state = 1;
 
 
+	// get different sounds count
+	for (i=0; i<checked_symbols_length; i++) {
+		if ($.inArray(checked_storage_symbols.symbols[i].ro, answers_tmp) == -1)
+			answers_tmp.push(checked_storage_symbols.symbols[i].ro);
+	}
+	different_sounds_count = answers_tmp.length;
+
+
 	// prepare the correct answer
 	if (flashcard_type == 1)
 		answers[0] = checked_storage_symbols.symbols[correct_answer_index].ro;
-	else if ((flashcard_type == 2) || (flashcard_type == 3))
+	else if (flashcard_type > 1)
 		answers[0] = checked_storage_symbols.symbols[correct_answer_index].sy;
 
 
 	// prepare wrong answers
+	i = 1;
 	while (i < $.cookie("difficulty")) {
 		skip_flag = 0;
 
-
 		// prepare incorrect answers if answers[i] is not the correct answer
-		if (checked_symbols_counter < (checked_symbols_length - 1)) {
+		if (checked_symbols_counter < different_sounds_count) {
 			current_symbol_index = Math.floor(Math.random() * checked_symbols_length);
 
 			answers_ro[i] = checked_storage_symbols.symbols[current_symbol_index].ro;
@@ -123,7 +164,7 @@ function initializeAnswers() {
 
 		if (flashcard_type == 1)
 			answers[i] = answers_ro[i];
-		else if ((flashcard_type == 2) || (flashcard_type == 3))
+		else if (flashcard_type > 1)
 			answers[i] = answers_sy[i];
 
 
@@ -133,7 +174,7 @@ function initializeAnswers() {
 				skip_flag = 1;
 
 		// skip same roumaji written in different kana type (hiragana/katakana)
-		if ((flashcard_type == 2) || (flashcard_type == 3))
+		if ((flashcard_type > 1) && (skip_flag == 0))
 			for (var j=0; j<i; j++)
 				if (answers_ro[i] == answers_ro[j])
 					skip_flag = 1;
@@ -144,7 +185,7 @@ function initializeAnswers() {
 
 
 		// if flashcard answer is unique, set next flashcard
-		if (skip_flag != 1) {
+		if (skip_flag == 0) {
 			checked_symbols_counter++;
 			i++;
 		}
@@ -179,19 +220,19 @@ function initializeAnswers() {
 			// set temporary answer
 			if (flashcard_type == 1)
 				tmp_answer = checked_storage_symbols.symbols[correct_answer_index].ro;
-			else if ((flashcard_type == 2) || (flashcard_type == 3))
+			else if (flashcard_type > 1)
 				tmp_answer = checked_storage_symbols.symbols[correct_answer_index].sy;
 
-			if (String(answers[temp_index]) == tmp_answer)
+			if (answers[tmp_index] == tmp_answer)
 				var answer_id = "correct_answer";
 			else
-				var answer_id = "answer_box_" + temp_index;
+				var answer_id = "answer_box_" + tmp_index;
 
 			answer_boxes += "" +
 				"<td id='" + answer_id + "' onclick='onAnswerBoxClick(\"" + answer_id + "\");'>" +
-				"" + answers[temp_index] +
+				"" + answers[tmp_index] +
 				"</td>";
-			temp_index++;
+			tmp_index++;
 		}
 		answer_boxes += "</tr>";
 	}
@@ -215,7 +256,6 @@ function onAnswerBoxClick(answer_id) {
 	// on answering correctly change box color and increse count
 	if (answer_id == "correct_answer") {
 		$("#" + answer_id).css('background-color', "#207947");
-		console.log("bla2");
 
 		// if the correct answer was the first choice increment both correct and total count
 		if (temp_correct_state == 1) {
@@ -259,7 +299,6 @@ function onAnswerBoxClick(answer_id) {
 						storage_symbols.symbols[i].tr++;
 					else if (flashcard_type == 3)
 						storage_symbols.symbols[i].tv++;
-
 			}
 
 			storage_score.total++;
@@ -278,7 +317,7 @@ function onAnswerBoxClick(answer_id) {
 	if (temp_correct_state == 2) {
 		if (flashcard_type == 3)
 			soundManager.destroySound("current_sound");
-		setTimeout(function() { setFlashcard() }, 1000);
+		setTimeout(function() { setFlashcard() }, 1300);
 	}
 }
 
@@ -389,6 +428,37 @@ function generateSuccessRatesTable() {
 
 
 
+// calculate success rate (percentage) for single symbol
+function calculateSuccessRate(index) {
+	var correct_kana_count = checked_storage_symbols.symbols[index].ck;
+	var total_kana_count = checked_storage_symbols.symbols[index].tk;
+
+	var correct_roumaji_count = checked_storage_symbols.symbols[index].cr;
+	var total_roumaji_count = checked_storage_symbols.symbols[index].tr;
+
+	var correct_voice_count = checked_storage_symbols.symbols[index].cv;
+	var total_voice_count = checked_storage_symbols.symbols[index].tv;
+
+
+	var correct_average_count = correct_kana_count + correct_roumaji_count + correct_voice_count;
+	var total_average_count = total_kana_count + total_roumaji_count + total_voice_count;
+
+
+	if (total_average_count > 0)
+		var average_succes_percentage = (correct_average_count / total_average_count).toPrecision(3);
+	else if ((total_average_count > 0) && (correct_average_count == 0))
+		var average_succes_percentage = 0.01;
+	else
+		var average_succes_percentage = 0;
+
+
+	return average_succes_percentage;
+}
+
+
+
+
+
 // randomize array indexes (used to shuffle answers in answer table)
 function randomizeArrayIndexes(my_array) {
 	var i = my_array.length;
@@ -403,3 +473,7 @@ function randomizeArrayIndexes(my_array) {
 
 	return my_array;
 }
+
+
+
+

@@ -117,8 +117,8 @@ function initializeLocalStorage() {
 								"tr": 0,
 								"cv": 0,
 								"tv": 0,
-								"rl": 0,
-								"rh": 0
+								"lr": 0,
+								"hr": 0
 						};
 
 						storage_symbols.symbols.push(tmp_JSON);
