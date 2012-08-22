@@ -18,20 +18,35 @@ require 'navigation.php';
 <div id="content"> <!-- CONTENT -->
 	<div id="practise_options">
 		<h3>Difficulty</h3>
+		<p>
+			<b>:: Beginner</b> - 4 possible answers, no symbols will be prioritized as possible answers over other symbols<br />
+			<b>:: Intermediate</b> - 8 possible answers, prioritize similar looking kana symbols and symbols from the same row<br />
+			<b>:: Advanced</b> - 12 possible answers, prioritization of similar looking kana symbols and symbols from the same row incresed even more
+		</p>
 		<form action="">
 			<input type="radio" name="difficulty" value="beginner" id="button_df4" onclick="changeDifficulty(4);" /> Beginner
 			<input type="radio" name="difficulty" value="intermediate" id="button_df8" onclick="changeDifficulty(8);" /> Intermediate
 			<input type="radio" name="difficulty" value="advanced" id="button_df12" onclick="changeDifficulty(12);" /> Advanced
-		</form>
+		</form><br />
+
 
 		<h3>Flashcard type</h3>
+		<p>
+			<b>:: Kana to roumaji</b> - Kana flashcards, roumaji answers<br />
+			<b>:: Roumaji to kana</b> - Roumaji flashcards, kana answers<br />
+			<b>:: Voice to kana</b> - Voice flashcards, kana answers
+		</p>
 		<form action="">
 			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" id="button_ktr" onclick="setFlashcardTypes(1);" /> Kana to roumaji
 			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" id="button_rtk" onclick="setFlashcardTypes(2);" /> Roumaji to kana
 			<input type='checkbox' name="flashcard_type" value="voice_to_kana" id="button_vtk" onclick="setFlashcardTypes(3);" /> Voice to kana
-		</form>
+		</form><br />
+
 
 		<h3>Kana</h3>
+		<p>
+			<b>:: Select</b>  kana symbols you would like to practise (types and sets can be combined)
+		</p>
 		<!-- kana type selector -->
 		<form action="" default:1>
 			<input type="radio" name="kana_type" value="hiragana" id="button_kt1" onclick="changeKanaTable();" /> Hiragana

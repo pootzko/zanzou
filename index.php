@@ -30,7 +30,7 @@ require 'navigation.php';
 	<h3>Welcome to Zanzou!</h3>
 
 	<ul>
-		<li>memorize hiragana and katakana using flashcards</li>
+		<li>memorize <a href="http://en.wikipedia.org/wiki/Hiragana">hiragana</a> and <a href="http://en.wikipedia.org/wiki/Katakana">katakana</a> using flashcards</li>
 		<li>three difficulty levels</li>
 		<li>three types of exercises</li>
 		<ul>
@@ -38,13 +38,13 @@ require 'navigation.php';
 			<li>roumaji to kana</li>
 			<li>voice to kana</li>
 		</ul>
-		<li>customize your kana practise set</li>
-		<li>repetition frequency based on previous success</li>
+		<li>customize your kana practice set</li>
+		<li>flashcard frequency based on correct answers</li>
 	</ul>
 
 	<br />
 
-	<p>Zanzou is a place to practise your kana memory for free. It keeps track of practised kana symbols and repeats the ones that you didn't recognize more often. Zanzou will make the exercises a bit more difficult by providing symbols similar to the correct answer together with it. Zanzou will not teach you <a href="http://en.wikipedia.org/wiki/Kanji">kanji</a>, or kana stroke order (<a href="http://en.wikipedia.org/wiki/Hiragana#Stroke_order_and_direction">hiragana</a>/<a href="http://en.wikipedia.org/wiki/Katakana#Stroke_order">katakana</a>).</p>
+	<p>Zanzou is a place to practise your kana memory. Its goal is to help people that already started learning kana and need a place to sharpen or refresh their kana knowledge but a complete beginner might find it useful as well (understanding how <a href="http://en.wikipedia.org/wiki/Kana#Diacritics">diacritics</a> are used and how to create <a href="http://en.wikipedia.org/wiki/Kana#Digraphs">digraphs</a> is however, needed). Zanzou keeps track of practised kana symbols and repeats the ones that were not recognized more frequently. Zanzou can also increse the difficulty of exercises by providing symbols similar to the correct answer together with it. Zanzou will not teach you <a href="http://en.wikipedia.org/wiki/Kanji">kanji</a> or kana stroke order (<a href="http://en.wikipedia.org/wiki/Hiragana#Stroke_order_and_direction">hiragana</a>/<a href="http://en.wikipedia.org/wiki/Katakana#Stroke_order">katakana</a>).</p>
 </div> <!-- /CONTENT -->
 
 

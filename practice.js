@@ -152,7 +152,7 @@ function initializeAnswers() {
 			var similar_row = -1;
 			similar_check = 1;
 
-			// set frequency of
+			// set the frequency (difficulty increse)
 			if ($.cookie("difficulty") == 8)
 				var frequency = 0.25;
 			else
@@ -188,9 +188,68 @@ function initializeAnswers() {
 		}
 
 
-		// TO-DO: add symbols from the same row to the answers pool
+		// add symbols from the same row to the answers pool
 		if (row_check == 0) {
+			var tmp_row, tmp_kana_set, tmp_kana_type;
 			row_check = 1;
+
+			// set the frequency (difficulty increse)
+			if ($.cookie("difficulty") == 8)
+				var frequency = 0.4;
+			else ($.cookie("difficulty") == 12)
+				var frequency = 0.65;
+
+			// find the row, set and type that the answer is located at
+			for (var j=0; j<storage_symbols_length; j++) {
+				if (storage_symbols.symbols[j].sy == checked_storage_symbols.symbols[correct_answer_index].sy) {
+					tmp_type = storage_symbols.symbols[j].kt;
+					tmp_set = storage_symbols.symbols[j].ks;
+					tmp_row = storage_symbols.symbols[j].kr;
+					break;
+				}
+			}
+
+			// iterate through the same row and append as answers
+			for (var j=0; j<storage_symbols_length; j++) {
+				if (storage_symbols.symbols[j].kr == tmp_row) {
+					if (storage_symbols.symbols[j].ks == tmp_set) {
+						if (storage_symbols.symbols[j].kt == tmp_type) {
+							if (Math.random() < frequency) {
+								if (flashcard_type == 1)
+									answers[i] = storage_symbols.symbols[j].ro;
+								else if (flashcard_type > 1)
+									answers[i] = storage_symbols.symbols[j].sy;
+
+								// skip duplicate answers (same incorrect answer appearing twice)
+								for (var k=0; k<i; k++)
+									if (answers[i] == answers[k])
+										skip_flag = 1;
+
+								// skip empty symbol values
+								if (answers[i] == "")
+									skip_flag = 1;
+
+								// if flashcard answer is unique, set next flashcard
+								if (skip_flag == 0) {
+									// check if symbol is "checked" or just in the same row
+									for (var l=0; l<checked_symbols_length; l++) {
+										if (answers[i] ==  checked_storage_symbols.symbols[l].ro) {
+											checked_symbols_counter++;
+											break;
+										}
+										if (answers[i] ==  checked_storage_symbols.symbols[l].sy) {
+											checked_symbols_counter++;
+											break;
+										}
+									}
+									i++;
+								}
+							}
+						}
+					}
+				}
+			}
+			skip_flag = 0;
 		}
 
 
@@ -207,7 +266,6 @@ function initializeAnswers() {
 			answers_ro[i] = storage_symbols.symbols[current_symbol_index].ro;
 			answers_sy[i] = storage_symbols.symbols[current_symbol_index].sy;
 		}
-
 
 		if (flashcard_type == 1)
 			answers[i] = answers_ro[i];
@@ -364,7 +422,7 @@ function onAnswerBoxClick(answer_id) {
 	if (temp_correct_state == 2) {
 		if (flashcard_type == 3)
 			soundManager.destroySound("current_sound");
-		setTimeout(function() { setFlashcard() }, 1300);
+		setTimeout(function() { setFlashcard() }, 1000);
 	}
 }
 

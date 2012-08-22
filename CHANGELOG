@@ -17,6 +17,10 @@ statistics implementation
 CHANGELOG HISTORY:
 --------------
 
+v0.4.0
+implemented incresed difficulty based on symbols from the same row
+added options descriptions
+
 v0.3.2
 implemented incresed difficulty based on similar answers
 
