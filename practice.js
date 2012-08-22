@@ -118,7 +118,7 @@ function initializeAnswers() {
 	var answer_boxes = "";
 	var answers = [], answers_ro = [], answers_sy = [], answers_tmp = [];
 	var tmp_index = 0, checked_symbols_counter = 0, skip_flag = 0, different_sounds_count, i;
-
+	var similar_check = 0, row_check = 0;
 
 	// used in onAnswerBoxClick()
 	// 1 => not answered yet
@@ -147,8 +147,55 @@ function initializeAnswers() {
 	while (i < $.cookie("difficulty")) {
 		skip_flag = 0;
 
+		// select similar kana for answers to increse difficulty
+		if (($.cookie("difficulty") > 4) && (similar_check == 0)) {
+			var similar_row = -1;
+			similar_check = 1;
+
+			// set frequency of
+			if ($.cookie("difficulty") == 8)
+				var frequency = 0.25;
+			else
+				var frequency = 0.65;
+
+			// check if currecnt symbol has similar looking symbols
+			for (var j=0; j<similar_kana.length; j++)
+				for (var k=0; k<similar_kana[j].length; k++)
+					if (checked_storage_symbols.symbols[correct_answer_index].sy == similar_kana[j][k])
+						similar_row = j;
+
+			// add similar answers to the answers pool
+			if (similar_row != -1) {
+				for (var j=0; j<similar_kana[similar_row].length; j++) {
+					var tmp_similar_symbol = similar_kana[similar_row][j];
+
+					for (var k=0; k<storage_symbols_length; k++) {
+						if (storage_symbols.symbols[k].sy != checked_storage_symbols.symbols[correct_answer_index].sy) {
+							if (storage_symbols.symbols[k].sy == tmp_similar_symbol) {
+								if (Math.random() < frequency) {
+									if (flashcard_type == 1)
+										answers[i] = storage_symbols.symbols[k].ro;
+									else if (flashcard_type > 1)
+										answers[i] = storage_symbols.symbols[k].sy;
+
+									i++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		// TO-DO: add symbols from the same row to the answers pool
+		if (row_check == 0) {
+			row_check = 1;
+		}
+
+
 		// prepare incorrect answers if answers[i] is not the correct answer
-		if (checked_symbols_counter < different_sounds_count) {
+		if (checked_symbols_counter < (different_sounds_count-1)) {
 			current_symbol_index = Math.floor(Math.random() * checked_symbols_length);
 
 			answers_ro[i] = checked_storage_symbols.symbols[current_symbol_index].ro;

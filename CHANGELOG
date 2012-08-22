@@ -10,15 +10,15 @@ authentication implementation
 v0.4.0
 statistics implementation
 
-v0.3.0
-intelligent algorithm implementation
-
 
 
 
 
 CHANGELOG HISTORY:
 --------------
+
+v0.3.2
+implemented incresed difficulty based on similar answers
 
 v0.3.1
 changed answer selection (prioritize answers from the checked kana pool)
