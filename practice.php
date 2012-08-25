@@ -5,6 +5,7 @@
 <script type="text/javascript" src="javascript_libs/soundmanager2/soundmanager2-nodebug-jsmin.js"></script>
 <script type="text/javascript" src="localstorage.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
+<script type="text/javascript" src="database.js"></script>
 <script type="text/javascript" src="practice.js"></script>
 <script type="text/javascript" src="kana.js"></script>
 

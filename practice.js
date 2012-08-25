@@ -244,12 +244,12 @@ function initializeAnswers() {
 									}
 									i++;
 								}
+								skip_flag = 0;
 							}
 						}
 					}
 				}
 			}
-			skip_flag = 0;
 		}
 
 
@@ -297,7 +297,8 @@ function initializeAnswers() {
 	}
 
 
-	// randomize answer positions
+	// trim answers[] and randomize answer positions
+	answers.splice($.cookie("difficulty"), answers.length - $.cookie("difficulty"))
 	answers = randomizeArrayIndexes(answers);
 
 
@@ -382,7 +383,14 @@ function onAnswerBoxClick(answer_id) {
 					storage_score.correct++;
 					storage_score.total++;
 
+					var symbol_key = symbolKey(i);
+					var table_column = DBtableColumnName();
+
+					incrementDBScoreValue(symbol_key, table_column + "c");
+					incrementDBScoreValue(symbol_key, table_column + "t");
+
 					temp_correct_state = 2;
+					break;
 				}
 			}
 		}
@@ -397,13 +405,21 @@ function onAnswerBoxClick(answer_id) {
 		// increse total count only if answered wrongly on first try
 		if (temp_correct_state == 1) {
 			for (var i=0; i<storage_symbols.symbols.length; i++) {
-				if (storage_symbols.symbols[i].sy == checked_storage_symbols.symbols[correct_answer_index].sy)
+				if (storage_symbols.symbols[i].sy == checked_storage_symbols.symbols[correct_answer_index].sy) {
 					if (flashcard_type == 1)
 						storage_symbols.symbols[i].tk++;
 					else if (flashcard_type == 2)
 						storage_symbols.symbols[i].tr++;
 					else if (flashcard_type == 3)
 						storage_symbols.symbols[i].tv++;
+
+					var symbol_key = symbolKey(i);
+					var table_column = DBtableColumnName();
+
+					incrementDBScoreValue(symbol_key, table_column + "t");
+
+					break;
+				}
 			}
 
 			storage_score.total++;
@@ -578,6 +594,47 @@ function randomizeArrayIndexes(my_array) {
 
 	return my_array;
 }
+
+
+
+
+
+// prepare symbol key for database query
+function symbolKey(index) {
+	var row_name = "" +
+		"" + storage_symbols.symbols[index].kt + "_" +
+		"" + storage_symbols.symbols[index].ks + "_" +
+		"" + storage_symbols.symbols[index].kr + "_" +
+		"" + storage_symbols.symbols[index].kc;
+
+	return row_name;
+}
+
+
+
+
+
+// prepare database column name for database query
+function DBtableColumnName() {
+	var column_name = "";
+	if ($.cookie("difficulty") == 4)
+		column_name += "b_";
+	else if ($.cookie("difficulty") == 8)
+		column_name += "i_";
+	else if ($.cookie("difficulty") == 12)
+		column_name += "a_";
+
+	if (flashcard_type == 1)
+		column_name += "ktr_";
+	else if (flashcard_type == 2)
+		column_name += "rtk_";
+	else if (flashcard_type == 3)
+		column_name += "vtk_";
+
+	return column_name;
+}
+
+
 
 
 

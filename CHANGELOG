@@ -15,7 +15,11 @@ statistics implementation
 
 
 CHANGELOG HISTORY:
---------------
+------------------------------
+
+v0.4.1
+implemented database creation, initialization and incrementation
+beginner difficulty too many possible answers bugfix
 
 v0.4.0
 implemented incresed difficulty based on symbols from the same row
