@@ -2,7 +2,9 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=8" /> <!-- enables fetching JSON values... *sigh* -->
+	<meta http-equiv="X-UA-Compatible" content="IE=8" /> <!-- enables fetching JSON values in IE... *sigh* -->
+	<meta name="description" content="Japanese kana flashcard learning site." />
+	<meta name="keywords" content="japanese, kana, hiragana, katakana, e-learning, flashcard" />
 	<title>Memorize kana easily with Zanzou</title>
 	<link rel="stylesheet" type="text/css" href="zanzou.css" />
 	<link rel="shortcut icon" href="/images/favicon.ico" />

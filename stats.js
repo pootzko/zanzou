@@ -73,7 +73,7 @@ function changeKanaTable() {
 // generate kana selected tables
 function generateTable(kana_type, kana_set, db_column_name_prefix) {
 	var rows, columns, column_prefixes, row_prefixes, symbols, table_header_row;
-	var checkbox_id, correct_answers, total_answers, success_rate;
+	var checkbox_id, correct_answers, total_answers, success_rate, tooltip_info;
 	var table_content = "<table>";
 
 
@@ -170,7 +170,9 @@ function generateTable(kana_type, kana_set, db_column_name_prefix) {
 			else
 				var success_rate = ((correct_answers / total_answers) * 100).toPrecision(3);
 
-			table_content += "<td class='stats_td'>";
+			tooltip_info = "<b>Correct:</b> " + correct_answers + "<br /><b>Total:</b> " + total_answers;
+
+			table_content += "<td class='stats_td' onMouseOver='toolTip(\"" + tooltip_info + "\", 125);' onMouseOut='toolTip();'>";
 			if (symbols[i][j][k] != "")
 				table_content += "<b>" + symbols[i][j][k] + "</b> <span class='symbol_info'>(" + success_rate + "%)</span>";
 

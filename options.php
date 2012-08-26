@@ -21,7 +21,7 @@ require 'navigation.php';
 		<p>
 			<b>• Beginner</b> - 4 possible answers, no symbols will be prioritized as possible answers over other symbols<br />
 			<b>• Intermediate</b> - 8 possible answers, prioritize similar looking kana symbols and symbols from the same row<br />
-			<b>• Advanced</b> - 12 possible answers, prioritization of similar looking kana symbols and symbols from the same row incresed even more
+			<b>• Advanced</b> - 12 possible answers, prioritization effect incresed
 		</p>
 		<!-- difficulty selector -->
 		<form action="">

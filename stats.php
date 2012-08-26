@@ -2,8 +2,8 @@
 
 <script type="text/javascript" src="javascript_libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="javascript_libs/jquery.cookie.js"></script>
+<script type="text/javascript" src="javascript_libs/tooltip.js"></script>
 <script type="text/javascript" src="localstorage.js"></script>
-<script type="text/javascript" src="cookie.js"></script>
 <script type="text/javascript" src="database.js"></script>
 <script type="text/javascript" src="kana.js"></script>
 <script type="text/javascript" src="stats.js"></script>
@@ -19,7 +19,8 @@ require 'navigation.php';
 <div id="content"> <!-- CONTENT -->
 	<p>
 		Zanzou records users success rates, which are used to calculate global symbol success rates.<br />
-		Based on difficulty, flashcard and kana types, corresponding success rates can be viewed.
+		Based on difficulty, flashcard and kana types, corresponding success rates can be viewed.<br />
+		(hover over success rate to view the global amount of correct/total answers)
 	</p>
 
 	<div id="practise_options">
