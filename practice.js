@@ -31,9 +31,7 @@ function initializeSound() {
 // prepare flashcard
 function setFlashcard() {
 	var tmp_low_range = 0, tmp_high_range = 0, tmp_range_value = 0;
-	var unpractised_coefficient = 3;
 	var flawless_coefficient = 1;
-	var practised_coefficient = 4;
 	checked_storage_symbols = {"symbols": []};
 
 	// single out chosen practice symbols
@@ -42,7 +40,6 @@ function setFlashcard() {
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
 
 
-	console.log("###############");
 	// set symbol appearance probabilities
 	for (var i=0; i<checked_storage_symbols.symbols.length; i++) {
 		var success_rate_percentage = calculateSuccessRate(i);
@@ -50,20 +47,14 @@ function setFlashcard() {
 		tmp_low_range = tmp_high_range;
 		// symbols that have not been practised yet
 		if (success_rate_percentage == 0)
-			tmp_high_range += checked_storage_symbols.symbols.length / unpractised_coefficient;
+			tmp_high_range += checked_storage_symbols.symbols.length;
 		else if (success_rate_percentage == 1)
 			tmp_high_range += flawless_coefficient;
-		else {
-			tmp_high_range += (checked_storage_symbols.symbols.length * (1 - success_rate_percentage)) * practised_coefficient;
-
-			console.log(checked_storage_symbols.symbols[i].sy + "   PERC:" + (1 - success_rate_percentage) + "   COEFF:" + (checked_storage_symbols.symbols.length * (1 - success_rate_percentage)) + "   FREQ:" + (tmp_high_range - tmp_low_range));
-		}
+		else
+			tmp_high_range += (checked_storage_symbols.symbols.length * (-1 * Math.log(success_rate_percentage)));
 
 		checked_storage_symbols.symbols[i].lr = Math.floor(tmp_low_range * 100) / 100;
 		checked_storage_symbols.symbols[i].hr = Math.floor(tmp_high_range * 100) / 100;
-
-		//console.log(checked_storage_symbols.symbols[i].sy + " " + (tmp_high_range - tmp_low_range));
-		//console.log(tmp_low_range + " " + tmp_high_range);
 	}
 
 
@@ -493,8 +484,8 @@ function generateSuccessRatesTable() {
 	var total_kana_count = checked_storage_symbols.symbols[correct_answer_index].tk;
 
 	if (total_kana_count != 0) {
-		var kana_succes_percentage = " (" + (correct_kana_count / total_kana_count * 100).toPrecision(4) + "%)";
-		var kana_score = correct_kana_count + "/" + total_kana_count + kana_succes_percentage;
+		var kana_success_percentage = " (" + (correct_kana_count / total_kana_count * 100).toPrecision(4) + "%)";
+		var kana_score = correct_kana_count + "/" + total_kana_count + kana_success_percentage;
 	}
 	else
 		var kana_score = "not yet rated";
@@ -505,8 +496,8 @@ function generateSuccessRatesTable() {
 	var total_roumaji_count = checked_storage_symbols.symbols[correct_answer_index].tr;
 
 	if (total_roumaji_count != 0) {
-		var roumaji_succes_percentage = " (" + (correct_roumaji_count / total_roumaji_count * 100).toPrecision(4) + "%)";
-		var roumaji_score = correct_roumaji_count + "/" + total_roumaji_count + roumaji_succes_percentage;
+		var roumaji_succesd_percentage = " (" + (correct_roumaji_count / total_roumaji_count * 100).toPrecision(4) + "%)";
+		var roumaji_score = correct_roumaji_count + "/" + total_roumaji_count + roumaji_succesd_percentage;
 	}
 	else
 		var roumaji_score = "not yet rated";
@@ -517,8 +508,8 @@ function generateSuccessRatesTable() {
 	var total_voice_count = checked_storage_symbols.symbols[correct_answer_index].tv;
 
 	if (total_voice_count != 0) {
-		var voice_succes_percentage = " (" + (correct_voice_count / total_voice_count * 100).toPrecision(4) + "%)";
-		var voice_score = correct_voice_count + "/" + total_voice_count + voice_succes_percentage;
+		var voice_success_percentage = " (" + (correct_voice_count / total_voice_count * 100).toPrecision(4) + "%)";
+		var voice_score = correct_voice_count + "/" + total_voice_count + voice_success_percentage;
 	}
 	else
 		var voice_score = "not yet rated";
@@ -529,14 +520,14 @@ function generateSuccessRatesTable() {
 	var total_average_count = total_kana_count + total_roumaji_count + total_voice_count;
 
 	if (total_average_count != 0) {
-		var average_succes_percentage = " (" + (correct_average_count / total_average_count * 100).toPrecision(4) + "%)";
-		var average_score = correct_average_count + "/" + total_average_count + average_succes_percentage;
+		var average_success_percentage = " (" + (correct_average_count / total_average_count * 100).toPrecision(4) + "%)";
+		var average_score = correct_average_count + "/" + total_average_count + average_success_percentage;
 	}
 	else
 		var average_score = "not yet rated";
 
 
-	var succes_rates_table = "" +
+	var success_rates_table = "" +
 		"<table>" +
 		"	<th>Kana to roumaji:</th>" +
 		"		<tr><td>• " + kana_score + "</td></tr>" +
@@ -554,7 +545,7 @@ function generateSuccessRatesTable() {
 
 
 	$("#score_table_holder").empty();
-	$("#score_table_holder").append(succes_rates_table);
+	$("#score_table_holder").append(success_rates_table);
 }
 
 
@@ -577,15 +568,24 @@ function calculateSuccessRate(index) {
 	var total_average_count = total_kana_count + total_roumaji_count + total_voice_count;
 
 
-	if (total_average_count > 0)
-		var average_succes_percentage = (correct_average_count / total_average_count).toPrecision(3);
+	// if symbol was answered at least once correctly
+	if ((total_average_count > 0) && (correct_average_count != 0))
+		var average_success_percentage = (correct_average_count / total_average_count).toPrecision(3);
+	// if symbol has been answered at least once so far, but with zero success
 	else if ((total_average_count > 0) && (correct_average_count == 0))
-		var average_succes_percentage = 0.01;
+		var average_success_percentage = 0.01;
+	// if symbol hasn't been answered yet
 	else
-		var average_succes_percentage = 0;
+		var average_success_percentage = 0;
 
 
-	return average_succes_percentage;
+	// upon reaching 0.9 it can considered that symbol has been practised
+	// enough and doesn't need further prioritization
+	if (average_success_percentage > 0.9)
+		average_success_percentage = 1;
+
+
+	return average_success_percentage;
 }
 
 
