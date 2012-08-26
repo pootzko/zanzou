@@ -109,11 +109,15 @@ function generateTable(kana_type, kana_set, db_column_name_prefix) {
 		else
 			success_rate = ((correct_answers / total_answers) * 100).toPrecision(3);
 
+		tooltip_info = "<b>Correct:</b> " + correct_answers + "<br /><b>Total:</b> " + total_answers;
+
 		n_symbol = "<b>" + symbols[10][0][k] + "</b> <span class='symbol_info'>(" + success_rate + "%)</span>";
 		special = "" +
 			"<tr class='table_symbol'>" +
 			"	<td class='table_prefix'></td>" +
-			"	<td></td><td></td><td class='stats_td'>" + n_symbol + "</td><td></td><td></td>" +
+			"	<td></td><td></td><td " +
+			"	class='stats_td' onMouseOver='toolTip(\"" + tooltip_info + "\", 125);' onMouseOut='toolTip();'>" + n_symbol +
+			"	</td><td></td><td></td>" +
 			"</tr>";
 	}
 	else if (kana_set == "digraphs") {
@@ -144,7 +148,6 @@ function generateTable(kana_type, kana_set, db_column_name_prefix) {
 		alert("error: wrong kana set");
 
 
-
 	// populate table with kana
 	// create table header row
 	table_header_row = "<tr><td class='empty_box'></td>";
@@ -172,9 +175,14 @@ function generateTable(kana_type, kana_set, db_column_name_prefix) {
 
 			tooltip_info = "<b>Correct:</b> " + correct_answers + "<br /><b>Total:</b> " + total_answers;
 
-			table_content += "<td class='stats_td' onMouseOver='toolTip(\"" + tooltip_info + "\", 125);' onMouseOut='toolTip();'>";
-			if (symbols[i][j][k] != "")
-				table_content += "<b>" + symbols[i][j][k] + "</b> <span class='symbol_info'>(" + success_rate + "%)</span>";
+			table_content += "<td class='stats_td' ";
+			if (symbols[i][j][k] != "") {
+				table_content += "" +
+					"onMouseOver='toolTip(\"" + tooltip_info + "\", 125);' onMouseOut='toolTip();'>" +
+					"<b>" + symbols[i][j][k] + "</b> <span class='symbol_info'>(" + success_rate + "%)</span>";
+			}
+			else
+				table_content += ">";
 
 			table_content += "</td>";
 		}

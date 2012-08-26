@@ -171,6 +171,7 @@ div#kana_table td.options_td {
 div#kana_table td.stats_td {
 	width: auto;
 	padding: 0 14px 0 8px;
+	cursor: default;
 }
 
 div#kana_table tr.table_symbol:nth-child(odd) {

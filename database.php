@@ -118,7 +118,7 @@ class ZanzouDB {
 
 				// for "n" symbol
 				if ($kana_set == "mon") {
-					$sql = "INSERT INTO symbols (symbol_key) VALUES ('h_mon_10_0')";
+					$sql = "INSERT INTO symbols (symbol_key) VALUES ('" . $kana_type . "_mon_10_0')";
 
 					$query = $this->mysqli->query($sql);
 
