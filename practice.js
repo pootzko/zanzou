@@ -42,6 +42,7 @@ function setFlashcard() {
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
 
 
+	console.log("###############");
 	// set symbol appearance probabilities
 	for (var i=0; i<checked_storage_symbols.symbols.length; i++) {
 		var success_rate_percentage = calculateSuccessRate(i);
@@ -52,11 +53,17 @@ function setFlashcard() {
 			tmp_high_range += checked_storage_symbols.symbols.length / unpractised_coefficient;
 		else if (success_rate_percentage == 1)
 			tmp_high_range += flawless_coefficient;
-		else
+		else {
 			tmp_high_range += (checked_storage_symbols.symbols.length * (1 - success_rate_percentage)) * practised_coefficient;
 
-		 checked_storage_symbols.symbols[i].lr = Math.floor(tmp_low_range * 100) / 100;
-		 checked_storage_symbols.symbols[i].hr = Math.floor(tmp_high_range * 100) / 100;
+			console.log(checked_storage_symbols.symbols[i].sy + "   PERC:" + (1 - success_rate_percentage) + "   COEFF:" + (checked_storage_symbols.symbols.length * (1 - success_rate_percentage)) + "   FREQ:" + (tmp_high_range - tmp_low_range));
+		}
+
+		checked_storage_symbols.symbols[i].lr = Math.floor(tmp_low_range * 100) / 100;
+		checked_storage_symbols.symbols[i].hr = Math.floor(tmp_high_range * 100) / 100;
+
+		//console.log(checked_storage_symbols.symbols[i].sy + " " + (tmp_high_range - tmp_low_range));
+		//console.log(tmp_low_range + " " + tmp_high_range);
 	}
 
 
