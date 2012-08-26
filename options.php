@@ -23,6 +23,7 @@ require 'navigation.php';
 			<b>:: Intermediate</b> - 8 possible answers, prioritize similar looking kana symbols and symbols from the same row<br />
 			<b>:: Advanced</b> - 12 possible answers, prioritization of similar looking kana symbols and symbols from the same row incresed even more
 		</p>
+		<!-- difficulty selector -->
 		<form action="">
 			<input type="radio" name="difficulty" value="beginner" id="button_df4" onclick="changeDifficulty(4);" /> Beginner
 			<input type="radio" name="difficulty" value="intermediate" id="button_df8" onclick="changeDifficulty(8);" /> Intermediate
@@ -36,6 +37,7 @@ require 'navigation.php';
 			<b>:: Roumaji to kana</b> - Roumaji flashcards, kana answers<br />
 			<b>:: Voice to kana</b> - Voice flashcards, kana answers
 		</p>
+		<!-- flashcard type selector -->
 		<form action="">
 			<input type='checkbox' name="flashcard_type" value="kana_to_roumaji" id="button_ktr" onclick="setFlashcardTypes(1);" /> Kana to roumaji
 			<input type='checkbox' name="flashcard_type" value="roumaji_to_kana" id="button_rtk" onclick="setFlashcardTypes(2);" /> Roumaji to kana

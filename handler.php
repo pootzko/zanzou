@@ -13,5 +13,10 @@ if ($method == "IncrementScoreValue") {
 
 	$zanzou_db_obj->IncrementScoreValue($symbol_key, $table_column);
 }
+
+// fetch XML for "stats" page
+if ($method == "FetchXML") {
+	$zanzou_db_obj->GenerateXML();
+}
 ?>
 

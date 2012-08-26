@@ -1,3 +1,4 @@
+// on answering, increment total and/or correct value in DB
 function incrementDBScoreValue(symbol_key, table_column) {
 	$.ajax({
 		type: "POST",
@@ -7,4 +8,24 @@ function incrementDBScoreValue(symbol_key, table_column) {
 		success: function(text) {
 		}
 	});
+}
+
+
+
+// fetch DB values as XML
+function fetchXML() {
+	var xml;
+
+	$.ajax({
+		type: "POST",
+		url:  "handler.php",
+		data: "method=FetchXML",
+		dataType: "xml",
+		async: false,
+		success: function(data) {
+			xml = data;
+		}
+	});
+
+	return xml;
 }

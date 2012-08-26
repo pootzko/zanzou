@@ -114,9 +114,8 @@ function changeKanaTable() {
 
 // generate kana selected tables
 function generateTable(kana_type, kana_set) {
-	var rows, columns, column_prefixes, row_prefixes, symbols;
-	var table_header_row, table_header_column;
-	var checkbox_id_prefix = "", special = "";
+	var rows, columns, column_prefixes, row_prefixes, symbols, table_header_row;
+	var checkbox_id_prefix = "";
 	var table_content = "<table>";
 
 
@@ -211,7 +210,7 @@ function generateTable(kana_type, kana_set) {
 		for (j=0; j<columns; j++) {
 			var checkbox_id = checkbox_id_prefix + i + "_" + j;
 
-			table_content += "<td>";
+			table_content += "<td class='options_td'>";
 			if (symbols[i][j][k] != "") {
 				var symbol = "<b>" + symbols[i][j][k] + "</b> (" + symbols[i][j][0] + ")";
 				table_content += "" +
@@ -234,7 +233,7 @@ function generateTable(kana_type, kana_set) {
 	}
 
 	// append special symbols if they exist in current kana_set
-	if (special != "")
+	if (kana_set == "monographs")
 		table_content += special;
 
 

@@ -140,24 +140,46 @@ class ZanzouDB {
 		if ($query === FALSE)
 			echo "Error. Value not updated.";
 	}
+
+
+
+	// generate xml from symbols table
+	public function GenerateXML() {
+		$sql = "SELECT * FROM symbols";
+
+		$query = $this->mysqli->query($sql);
+
+		if ($query === FALSE)
+			echo "Error. XML not generated.";
+
+
+		// create xml tree
+		$doc = new DomDocument('1.0');
+
+		$root = $doc->createElement('symbols');
+		$root = $doc->appendChild($root);
+
+		while ($row = $query->fetch_assoc()) {
+			$entity = $doc->createElement('symbol');
+			$attribute = $doc->createAttribute('key');
+			$attribute->value = $row['symbol_key'];
+			$entity->appendChild($attribute);
+			$entity = $root->appendChild($entity);
+
+			foreach ($row as $column_name=>$column_data) {
+				if (($column_name == "id") || ($column_name == "symbol_key"))
+					continue;
+				$child = $doc->createElement($column_name);
+				$child = $entity->appendChild($child);
+				$value = $doc->createTextNode($column_data);
+				$value = $child->appendChild($value);
+			}
+		}
+
+		$xml_string = $doc->saveXML();
+		header("Content-Type: text/xml; charset=UTF-8");
+
+		echo $xml_string;
+	}
 }
-
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

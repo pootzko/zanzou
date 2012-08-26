@@ -124,7 +124,7 @@ div#kana_table {
 }
 
 div#kana_table table {
-	/*margin: 25px 0 0 14px;*/
+	table-layout: auto;
 	margin: 15px 0 0 8px;
 }
 
@@ -136,15 +136,23 @@ div#kana_table tr {
 }
 
 div#kana_table th {
-	padding-left: 30px;
+	padding-left: 31px;
 	background-color: #575652;
 	color: #f4f2e6;
 }
 
 div#kana_table td {
-	width: 96px;
 	height: 24px;
-	padding-left: 8px;
+}
+
+div#kana_table td.options_td {
+	width: auto;
+	padding: 0 14px 0 8px;
+}
+
+div#kana_table td.stats_td {
+	width: auto;
+	padding: 0 14px 0 8px;
 }
 
 div#kana_table tr.table_symbol:nth-child(odd) {
@@ -292,7 +300,6 @@ div#footer {
 	margin: 15px 0 0 10px;
 	font-size: 0.8em;
 }
-
 
 
 
