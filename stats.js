@@ -73,6 +73,7 @@ function changeKanaTable() {
 // generate kana selected tables
 function generateTable(kana_type, kana_set, db_column_name_prefix) {
 	var rows, columns, column_prefixes, row_prefixes, symbols, table_header_row;
+	var checkbox_id, correct_answers, total_answers, success_rate;
 	var table_content = "<table>";
 
 
@@ -99,11 +100,20 @@ function generateTable(kana_type, kana_set, db_column_name_prefix) {
 		checkbox_id_prefix += "mon_";
 
 		// "n" symbol
-		n_symbol = "<b>" + symbols[10][0][k] + "</b> (" + symbols[10][0][0] + ")";
+		checkbox_id = checkbox_id_prefix + "10_0";
+		correct_answers = $("symbols symbol[key=" + checkbox_id + "]", xml_data).find(db_column_name_prefix + "c").text();
+		total_answers = $("symbols symbol[key=" + checkbox_id + "]", xml_data).find(db_column_name_prefix + "t").text();
+
+		if (total_answers == 0)
+			success_rate = 0;
+		else
+			success_rate = ((correct_answers / total_answers) * 100).toPrecision(3);
+
+		n_symbol = "<b>" + symbols[10][0][k] + "</b> <span class='symbol_info'>(" + success_rate + "%)</span>";
 		special = "" +
 			"<tr class='table_symbol'>" +
 			"	<td class='table_prefix'></td>" +
-			"	<td></td><td></td><td>" + n_symbol + "</td><td></td><td></td>" +
+			"	<td></td><td></td><td class='stats_td'>" + n_symbol + "</td><td></td><td></td>" +
 			"</tr>";
 	}
 	else if (kana_set == "digraphs") {
@@ -150,19 +160,19 @@ function generateTable(kana_type, kana_set, db_column_name_prefix) {
 
 		// table content
 		for (j=0; j<columns; j++) {
-			var checkbox_id = checkbox_id_prefix + i + "_" + j;
+			checkbox_id = checkbox_id_prefix + i + "_" + j;
 
-			var correct_answers = $("symbols symbol[key=" + checkbox_id + "]", xml_data).find(db_column_name_prefix + "c").text();
-			var total_answers = $("symbols symbol[key=" + checkbox_id + "]", xml_data).find(db_column_name_prefix + "t").text();
+			correct_answers = $("symbols symbol[key=" + checkbox_id + "]", xml_data).find(db_column_name_prefix + "c").text();
+			total_answers = $("symbols symbol[key=" + checkbox_id + "]", xml_data).find(db_column_name_prefix + "t").text();
 
 			if (total_answers == 0)
-				var success_rate = 0;
+				success_rate = 0;
 			else
 				var success_rate = ((correct_answers / total_answers) * 100).toPrecision(3);
 
 			table_content += "<td class='stats_td'>";
 			if (symbols[i][j][k] != "")
-				table_content += "<b>" + symbols[i][j][k] + "</b> (" + success_rate + "%)";
+				table_content += "<b>" + symbols[i][j][k] + "</b> <span class='symbol_info'>(" + success_rate + "%)</span>";
 
 			table_content += "</td>";
 		}

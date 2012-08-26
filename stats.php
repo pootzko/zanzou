@@ -15,20 +15,27 @@ require 'navigation.php';
 
 
 
-<h2>Stats</h2>
+<h2>Global statistics</h2>
 <div id="content"> <!-- CONTENT -->
+	<p>
+		Zanzou records users success rates, which are used to calculate global symbol success rates.<br />
+		Based on difficulty, flashcard and kana types, corresponding success rates can be viewed.
+	</p>
 
 	<div id="practise_options">
+		<h4>Difficulty</h4>
 		<form action="">
 			<input type="radio" name="difficulty" value="beginner" id="button_df4" onclick="changeKanaTable();" /> Beginner
 			<input type="radio" name="difficulty" value="intermediate" id="button_df8" onclick="changeKanaTable();" /> Intermediate
 			<input type="radio" name="difficulty" value="advanced" id="button_df12" onclick="changeKanaTable();" /> Advanced
 		</form>
+		<h4>Flashcard type</h4>
 		<form action="">
 			<input type='radio' name="flashcard_type" value="kana_to_roumaji" id="button_ktr" onclick="changeKanaTable();" /> Kana to roumaji
 			<input type='radio' name="flashcard_type" value="roumaji_to_kana" id="button_rtk" onclick="changeKanaTable();" /> Roumaji to kana
 			<input type='radio' name="flashcard_type" value="voice_to_kana" id="button_vtk" onclick="changeKanaTable();" /> Voice to kana
 		</form>
+		<h4>Kana</h4>
 		<form action="">
 			<input type="radio" name="kana_type" value="hiragana" id="button_kt1" onclick="changeKanaTable();" /> Hiragana
 			<input type="radio" name="kana_type" value="katakana" id="button_kt2" onclick="changeKanaTable();" /> Katakana

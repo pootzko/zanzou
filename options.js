@@ -142,7 +142,7 @@ function generateTable(kana_type, kana_set) {
 		checkbox_id_prefix += "mon_";
 
 		// "n" symbol
-		n_symbol = "<b>" + symbols[10][0][k] + "</b> (" + symbols[10][0][0] + ")";
+		n_symbol = "<b>" + symbols[10][0][k] + "</b> <span class='symbol_info'>(" + symbols[10][0][0] + ")</span>";
 		special = "" +
 			"<tr class='table_symbol'>" +
 			"	<td class='table_prefix'></td>" +
@@ -212,7 +212,7 @@ function generateTable(kana_type, kana_set) {
 
 			table_content += "<td class='options_td'>";
 			if (symbols[i][j][k] != "") {
-				var symbol = "<b>" + symbols[i][j][k] + "</b> (" + symbols[i][j][0] + ")";
+				var symbol = "<b>" + symbols[i][j][k] + "</b> <span class='symbol_info'>(" + symbols[i][j][0] + ")</span>";
 				table_content += "" +
 					"<input type='checkbox'" +
 					"	name='" + kana_set + "'" +

@@ -30,6 +30,23 @@ h2 {
 	margin-top: 2px;
 	margin-left: 14px;
 }
+
+h3 {
+	margin-bottom: -5px;
+}
+
+h4 {
+	margin: 15px 0 5px 0;
+}
+
+p, form {
+	font-size: 0.9em;
+}
+
+ul {
+	font-size: 0.95em
+}
+
 div#header {
 	width: 980px;
 	height: auto;
@@ -81,7 +98,7 @@ div#main {
 div#navigation {
 	width: 200px;
 	float: left;
-	font-size: 1.8em;
+	font-size: 1.85em;
 	font-weight: bold;
 	text-align: right;
 }
@@ -125,7 +142,7 @@ div#kana_table {
 
 div#kana_table table {
 	table-layout: auto;
-	margin: 15px 0 0 8px;
+	margin: 16px 0 0 4px;
 }
 
 div#kana_table table, tr, td, th {
@@ -138,6 +155,7 @@ div#kana_table tr {
 div#kana_table th {
 	padding-left: 31px;
 	background-color: #575652;
+	font-size: 0.9em;
 	color: #f4f2e6;
 }
 
@@ -168,6 +186,7 @@ div#kana_table td.table_prefix {
 	padding-right: 8px;
 	text-align: right;
 	background-color: #575652;
+	font-size: 0.9em;
 	color: #f4f2e6;
 }
 
@@ -179,6 +198,10 @@ div#kana_table td.row_checkbox {
 	width: 26px;
 	padding: 0;
 	text-align: center;
+}
+
+span.symbol_info {
+	font-size: 0.9em;
 }
 
 div#test {
@@ -289,8 +312,10 @@ div#score_table_holder td.score_padding {
 	height: 18px;
 }
 
-div#separator {
+div#flashcard_info {
 	clear: both;
+	width: 485px;
+	font-size: 0.95em;
 }
 
 div#footer {

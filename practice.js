@@ -314,10 +314,7 @@ function initializeAnswers() {
 	// generate answers table and add success rate information to it
 	var success_rate = "Success rate: " + correct_answers_count + "/" + total_answers_count + " " + success_rate_percentage;
 	answer_boxes += "<table>" +
-		"<tr>" +
-		"	<td id='score' class='answers_table_header' colspan='3'>" + success_rate + "</td>" +
-		"	<td class='answers_table_header'><a href='practice.php'>skip</a></td>" +
-		"</tr>";
+		"<tr><td id='score' class='answers_table_header' colspan='4'>" + success_rate + "</td></tr>";
 
 
 	for (i=0; i<($.cookie("difficulty") / 4); i++) {
@@ -488,56 +485,64 @@ function generateSuccessRatesTable() {
 	var correct_kana_count = checked_storage_symbols.symbols[correct_answer_index].ck;
 	var total_kana_count = checked_storage_symbols.symbols[correct_answer_index].tk;
 
-	if (total_kana_count != 0)
+	if (total_kana_count != 0) {
 		var kana_succes_percentage = " (" + (correct_kana_count / total_kana_count * 100).toPrecision(4) + "%)";
+		var kana_score = correct_kana_count + "/" + total_kana_count + kana_succes_percentage;
+	}
 	else
-		var kana_succes_percentage = "";
+		var kana_score = "not yet rated";
 
 
 	// prepare roumaji to kana score
 	var correct_roumaji_count = checked_storage_symbols.symbols[correct_answer_index].cr;
 	var total_roumaji_count = checked_storage_symbols.symbols[correct_answer_index].tr;
 
-	if (total_roumaji_count != 0)
+	if (total_roumaji_count != 0) {
 		var roumaji_succes_percentage = " (" + (correct_roumaji_count / total_roumaji_count * 100).toPrecision(4) + "%)";
+		var roumaji_score = correct_roumaji_count + "/" + total_roumaji_count + roumaji_succes_percentage;
+	}
 	else
-		var roumaji_succes_percentage = "";
+		var roumaji_score = "not yet rated";
 
 
 	// prepare voice to kana score
 	var correct_voice_count = checked_storage_symbols.symbols[correct_answer_index].cv;
 	var total_voice_count = checked_storage_symbols.symbols[correct_answer_index].tv;
 
-	if (total_voice_count != 0)
+	if (total_voice_count != 0) {
 		var voice_succes_percentage = " (" + (correct_voice_count / total_voice_count * 100).toPrecision(4) + "%)";
+		var voice_score = correct_voice_count + "/" + total_voice_count + voice_succes_percentage;
+	}
 	else
-		var voice_succes_percentage = "";
+		var voice_score = "not yet rated";
 
 
 	// prepare average score
 	var correct_average_count = correct_kana_count + correct_roumaji_count + correct_voice_count;
 	var total_average_count = total_kana_count + total_roumaji_count + total_voice_count;
 
-	if (total_average_count != 0)
+	if (total_average_count != 0) {
 		var average_succes_percentage = " (" + (correct_average_count / total_average_count * 100).toPrecision(4) + "%)";
+		var average_score = correct_average_count + "/" + total_average_count + average_succes_percentage;
+	}
 	else
-		var average_succes_percentage = "";
+		var average_score = "not yet rated";
 
 
 	var succes_rates_table = "" +
 		"<table>" +
 		"	<th>Kana to roumaji:</th>" +
-		"		<tr><td>• " + correct_kana_count + "/" + total_kana_count + kana_succes_percentage + "</td></tr>" +
+		"		<tr><td>• " + kana_score + "</td></tr>" +
 		"		<tr><td class='score_padding'></td></tr>" +
 		"	<th>Roumaji to kana:</th>" +
-		"		<tr><td>• " + correct_roumaji_count + "/" + total_roumaji_count + roumaji_succes_percentage + "</td></tr>" +
+		"		<tr><td>• " + roumaji_score + "</td></tr>" +
 		"		<tr><td class='score_padding'></td></tr>" +
 		"	<th>Voice to kana:</th>" +
-		"		<tr><td>• " + correct_voice_count + "/" + total_voice_count + voice_succes_percentage + "</td></tr>" +
+		"		<tr><td>• " + voice_score + "</td></tr>" +
 		"		<tr><td class='score_padding'></td></tr>" +
 		"		<tr><td class='score_padding'></td></tr>" +
 		"	<th>Average:</th>" +
-		"		<tr><td>• " + correct_average_count + "/" + total_average_count + average_succes_percentage + "</td></tr>" +
+		"		<tr><td>• " + average_score + "</td></tr>" +
 		"</table>";
 
 
