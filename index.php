@@ -27,7 +27,7 @@ require 'navigation.php';
 
 <h2>Home</h2>
 <div id="content"> <!-- CONTENT -->
-	<h3>Welcome to Zanzou!</h3>
+	<h3>Welcome to Zanzou!</h3><br />
 
 	<ul>
 		<li>memorize <a href="http://en.wikipedia.org/wiki/Hiragana">hiragana</a> and <a href="http://en.wikipedia.org/wiki/Katakana">katakana</a> using flashcards</li>

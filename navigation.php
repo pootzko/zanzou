@@ -4,7 +4,7 @@
 			<li><a href="options.php">options</a></li>
 			<li><a href="practice.php">practice</a></li>
 			<li><a href="stats.php">stats</a></li>
-			<li><a href="/">about</a></li>
+			<li><a href="about.php">about</a></li>
 		</ul>
 	</div> <!-- /NAVIGATION -->
 
