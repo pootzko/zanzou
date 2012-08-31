@@ -1,10 +1,21 @@
 TO-DO:
 ------------------------------
-nada
+remember options "state"
+group similar sounding symbol answers
+strokes of 20 flashcards, score, and success word
+typing answer input type
+count wrong answer towards incorrect for that symbol as well
+personal statistics
+prioritize by total amount
+block old browsers
 
 
 CHANGELOG HISTORY:
 ------------------------------
+
+v1.0.1
+prevent same flashcard from appearing a few times in a row
+modified descriptions
 
 v1.0.0
 added "about" section

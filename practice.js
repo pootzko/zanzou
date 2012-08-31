@@ -3,6 +3,7 @@ $(document).ready(function() {
 	storage_symbols = JSON.parse(localStorage.getItem("storage_symbols_obj"));
 	storage_score = JSON.parse(localStorage.getItem("storage_score_obj"));
 	checked_storage_symbols = {};
+	latest_symbols = ["あ", "い", "う"];
 	correct_answer_index = 0;
 	flashcard_type = 1;
 	temp_correct_state = 1; // used in onAnswerBoxClick()
@@ -31,7 +32,7 @@ function initializeSound() {
 // prepare flashcard
 function setFlashcard() {
 	var tmp_low_range = 0, tmp_high_range = 0, tmp_range_value = 0;
-	var flawless_coefficient = 1;
+	var flawless_coefficient = 1, check_latest = 1, latest_flag;
 	checked_storage_symbols = {"symbols": []};
 
 	// single out chosen practice symbols
@@ -61,16 +62,38 @@ function setFlashcard() {
 	randomizeFlashcardType();
 
 
-	// choose new flashcard
-	tmp_range_value = Math.floor(Math.random() * tmp_high_range);
+	// choose new flashcard if it hasn't appeared as one of previous 3 flashcards
+	while (check_latest == 1) {
+		// randomize new flashcard
+		tmp_range_value = Math.floor(Math.random() * tmp_high_range);
 
-	// find the symbol within given range
-	for (var i=0; i<checked_storage_symbols.symbols.length; i++) {
-		if ((checked_storage_symbols.symbols[i].lr <= tmp_range_value) && (checked_storage_symbols.symbols[i].hr > tmp_range_value)) {
-			correct_answer_index = i;
-			break;
+		// find the symbol within given range
+		for (var i=0; i<checked_storage_symbols.symbols.length; i++) {
+			if ((checked_storage_symbols.symbols[i].lr <= tmp_range_value) && (checked_storage_symbols.symbols[i].hr > tmp_range_value)) {
+				correct_answer_index = i;
+				break;
+			}
 		}
+
+		// check if current symbol appeared as one of previous 3 flashcards
+		latest_flag = 0;
+
+		for (var i=0; i<latest_symbols.length; i++) {
+			if (checked_storage_symbols.symbols[correct_answer_index].sy == latest_symbols[i]) {
+				latest_flag = 1;
+				break;
+			}
+		}
+
+		check_latest = latest_flag;
 	}
+
+
+	// shift latest_symbols[]
+	latest_symbols[0] = latest_symbols[1];
+	latest_symbols[1] = latest_symbols[2];
+	latest_symbols[2] = checked_storage_symbols.symbols[correct_answer_index].sy;
+
 
 	// set current flashcard
 	if (flashcard_type == 1)
