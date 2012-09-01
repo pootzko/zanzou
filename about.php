@@ -14,7 +14,7 @@ require 'navigation.php';
 <h2>About</h2>
 <div id="content"> <!-- CONTENT -->
 	<h3>About Zanzou</h3>
-	<p>Zanzou is an e-learning computer science master's degree thesis project at <a href="http://www.etfos.unios.hr/">Faculty of electrical engineering</a>, Osijek, Croatia. Its goal is to help people memorize kana using flashcards. Based on (un)successful answering it will repeat certain symbols more frequently and depending on the chosen difficulty level, it will group and present some of the similar symbols together to make it harder to "guess the answer". Global user success statistics are also available.</p><br />
+	<p>Zanzou is an e-learning tool I made as my computer science master's degree thesis project at the <a href="http://www.etfos.unios.hr/">Faculty of electrical engineering</a>, Osijek, Croatia. Its goal is to help people memorize kana using flashcards. Based on unsuccessful answering, Zanzou will repeat certain symbols more frequently and (depending on the chosen difficulty level) it will group and present some of the similar symbols together to make it harder to "guess the answer". Global user success statistics are also available.</p><br />
 
 	<h3>Thanks to</h3>
 	<ul>

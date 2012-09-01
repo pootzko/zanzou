@@ -13,6 +13,9 @@ block old browsers
 CHANGELOG HISTORY:
 ------------------------------
 
+v1.0.3
+minor grammar and description corrections
+
 v1.0.2
 moved javascript_libs/ to lib/
 

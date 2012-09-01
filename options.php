@@ -16,7 +16,7 @@ require 'navigation.php';
 
 <h2>Options</h2>
 <div id="content"> <!-- CONTENT -->
-	<div id="practise_options">
+	<div id="practice_options">
 		<h3>Difficulty</h3>
 		<p>
 			<b>• Beginner</b> - 4 possible answers, no symbols will be prioritized as possible answers over other symbols<br />
@@ -47,7 +47,7 @@ require 'navigation.php';
 
 		<h3>Kana</h3>
 		<p>
-			<b>• Select</b>  kana symbols you would like to practise (types and sets can be combined)
+			<b>• Select</b>  kana symbols you would like to practice (types and sets can be combined)
 		</p>
 		<!-- kana type selector -->
 		<form action="" default:1>

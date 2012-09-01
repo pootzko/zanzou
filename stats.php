@@ -18,8 +18,7 @@ require 'navigation.php';
 <h2>Global statistics</h2>
 <div id="content"> <!-- CONTENT -->
 	<p>
-		Zanzou records users success rates, which are used to calculate global symbol success rates. Based on difficulty, flashcard and kana types, corresponding global success rates (for all the users combined) can be viewed.<br />
-		(hover over success rate to view the global amount of correct/total answers)
+		Zanzou records users success rates, which are used to calculate global symbol success rates. Based on difficulty, flashcard and kana types, corresponding global success rates (for all the users combined) can be viewed. Hover over success rate to view the global amount of correct/total answers.
 	</p>
 
 	<div id="practise_options">
