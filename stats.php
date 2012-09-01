@@ -1,8 +1,8 @@
 <?php require 'head.php'; ?>
 
-<script type="text/javascript" src="javascript_libs/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="javascript_libs/jquery.cookie.js"></script>
-<script type="text/javascript" src="javascript_libs/tooltip.js"></script>
+<script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="lib/jquery.cookie.js"></script>
+<script type="text/javascript" src="lib/tooltip.js"></script>
 <script type="text/javascript" src="localstorage.js"></script>
 <script type="text/javascript" src="database.js"></script>
 <script type="text/javascript" src="kana.js"></script>

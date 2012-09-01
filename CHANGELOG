@@ -13,6 +13,9 @@ block old browsers
 CHANGELOG HISTORY:
 ------------------------------
 
+v1.0.2
+moved javascript_libs/ to lib/
+
 v1.0.1
 prevent same flashcard from appearing a few times in a row
 modified descriptions
