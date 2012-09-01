@@ -1,5 +1,3 @@
-<?php require 'lib/stop-ie6/stopie6.php'; ?>
-
 </head>
 
 
