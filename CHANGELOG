@@ -17,6 +17,7 @@ v1.0.3
 minor grammar and description corrections
 added class to options "n" symbol and typo correction
 sounds bugfix
+not enough symbols selected bugfix
 
 v1.0.2
 moved javascript_libs/ to lib/

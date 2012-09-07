@@ -32,8 +32,11 @@ function initializeSound() {
 // prepare flashcard
 function setFlashcard() {
 	var tmp_low_range = 0, tmp_high_range = 0, tmp_range_value = 0;
-	var flawless_coefficient = 1, check_latest = 1, latest_flag;
+	var flawless_coefficient = 1, check_latest = 1, latest_flag, latest_amount;
 	checked_storage_symbols = {"symbols": []};
+
+	// check if at least one symbol is selected, if not - initialize firs five hiragana symbols
+	checkFlashcardAmount();
 
 	// single out chosen practice symbols
 	for (var i=0; i<storage_symbols.symbols.length; i++)
@@ -75,10 +78,17 @@ function setFlashcard() {
 			}
 		}
 
-		// check if current symbol appeared as one of previous 3 flashcards
+
 		latest_flag = 0;
 
-		for (var i=0; i<latest_symbols.length; i++) {
+		// set the latest_amount treshold (prevents problems with less than "latest_symbols.length" symbols selected)
+		if (checked_storage_symbols.symbols.length <= latest_symbols.length)
+			latest_amount = checked_storage_symbols.symbols.length - 1;
+		else
+			latest_amount = latest_symbols.length;
+
+		// check if current symbol appeared as one of previous "latest" flashcards
+		for (var i=0; i<latest_amount; i++) {
 			if (checked_storage_symbols.symbols[correct_answer_index].sy == latest_symbols[i]) {
 				latest_flag = 1;
 				break;
@@ -667,6 +677,21 @@ function DBtableColumnName() {
 		column_name += "vtk_";
 
 	return column_name;
+}
+
+
+
+
+
+// check if at least one symbol is selected, if not - initialize firs five hiragana symbols
+function checkFlashcardAmount() {
+	if (checked_storage_symbols.symbols.length == 0) {
+		for (var i=0; i<5; i++)
+			storage_symbols.symbols[i].se = 1;
+
+		// save changes to storage_symbols_obj
+		localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
+	}
 }
 
 
