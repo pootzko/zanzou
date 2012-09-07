@@ -51,16 +51,16 @@ require 'navigation.php';
 		</p>
 		<!-- kana type selector -->
 		<form action="" default:1>
-			<input type="radio" name="kana_type" value="hiragana" id="button_kt1" onclick="changeKanaTable();" /> Hiragana
-			<input type="radio" name="kana_type" value="katakana" id="button_kt2" onclick="changeKanaTable();" /> Katakana
+			<input type="radio" name="kana_type" value="hiragana" id="button_hiragana" onclick="changeKanaTable();" /> Hiragana
+			<input type="radio" name="kana_type" value="katakana" id="button_katakana" onclick="changeKanaTable();" /> Katakana
 		</form>
 
 		<!-- kana set selector -->
 		<form action="" default:1>
-			<input type="radio" name="kana_set" value="monographs" id="button_ks1" onclick="changeKanaTable();" /> Monographs
-			<input type="radio" name="kana_set" value="digraphs" id="button_ks2" onclick="changeKanaTable();" /> Digraphs
-			<input type="radio" name="kana_set" value="monographs_with_diacritics" id="button_ks3" onclick="changeKanaTable();" /> Monographs with diacritics
-			<input type="radio" name="kana_set" value="digraphs_with_diacritics" id="button_ks4" onclick="changeKanaTable();" /> Digraphs with diacritics
+			<input type="radio" name="kana_set" value="monographs" id="button_monographs" onclick="changeKanaTable();" /> Monographs
+			<input type="radio" name="kana_set" value="digraphs" id="button_digraphs" onclick="changeKanaTable();" /> Digraphs
+			<input type="radio" name="kana_set" value="monographs_with_diacritics" id="button_monographs_with_diacritics" onclick="changeKanaTable();" /> Monographs with diacritics
+			<input type="radio" name="kana_set" value="digraphs_with_diacritics" id="button_digraphs_with_diacritics" onclick="changeKanaTable();" /> Digraphs with diacritics
 		</form>
 	</div>
 

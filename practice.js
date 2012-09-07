@@ -35,13 +35,15 @@ function setFlashcard() {
 	var flawless_coefficient = 1, check_latest = 1, latest_flag, latest_amount;
 	checked_storage_symbols = {"symbols": []};
 
-	// check if at least one symbol is selected, if not - initialize firs five hiragana symbols
-	checkFlashcardAmount();
 
 	// single out chosen practice symbols
 	for (var i=0; i<storage_symbols.symbols.length; i++)
 		if (storage_symbols.symbols[i].se == 1)
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
+
+
+	// check if at least one symbol is selected, if not - initialize firs five hiragana symbols
+	checkFlashcardAmount();
 
 
 	// set symbol appearance probabilities

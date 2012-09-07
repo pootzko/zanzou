@@ -1,6 +1,5 @@
 TO-DO:
 ------------------------------
-remember options "state"
 group similar sounding symbol answers
 strokes of 20 flashcards, score, and success word
 typing answer input type
@@ -18,6 +17,7 @@ minor grammar and description corrections
 added class to options "n" symbol and typo correction
 sounds bugfix
 not enough symbols selected bugfix
+implemented kana table position state save
 
 v1.0.2
 moved javascript_libs/ to lib/

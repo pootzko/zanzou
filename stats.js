@@ -15,8 +15,8 @@ function initializeOptions() {
 	// set all checkboxes to default values
 	$("#button_df4").attr('checked', true);
 	$("#button_ktr").attr('checked', true);
-	$("#button_kt1").attr('checked', true);
-	$("#button_ks1").attr('checked', true);
+	$("#button_hiragana").attr('checked', true);
+	$("#button_monographs").attr('checked', true);
 	$("#kana_table").append(generateTable("hiragana", "monographs", "b_ktr_"));
 }
 
@@ -27,21 +27,20 @@ function initializeOptions() {
 // changes kana table type/set (on click)
 function changeKanaTable() {
 	// kana type selector
-	if ($("#button_kt1").is(':checked'))
+	if ($("#button_hiragana").is(':checked'))
 		var kana_type_selector = "hiragana";
-	else if ($("#button_kt2").is(':checked'))
+	else if ($("#button_katakana").is(':checked'))
 		var kana_type_selector = "katakana";
 
 	// kana set selector
-	if ($("#button_ks1").is(':checked'))
+	if ($("#button_monographs").is(':checked'))
 		var kana_set_selector = "monographs";
-	else if ($("#button_ks2").is(':checked'))
+	else if ($("#button_digraphs").is(':checked'))
 		var kana_set_selector = "digraphs";
-	else if ($("#button_ks3").is(':checked'))
+	else if ($("#button_monographs_with_diacritics").is(':checked'))
 		var kana_set_selector = "monographs_with_diacritics";
-	else if ($("#button_ks4").is(':checked'))
+	else if ($("#button_digraphs_with_diacritics").is(':checked'))
 		var kana_set_selector = "digraphs_with_diacritics";
-
 
 	// difficulty selector
 	if ($("#button_df4").is(':checked'))

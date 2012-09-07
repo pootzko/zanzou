@@ -18,5 +18,21 @@ $(document).ready(function() {
 		$.cookie("flashcard_type_rtk", 0);
 	if ($.cookie("flashcard_type_vtk") == null)
 		$.cookie("flashcard_type_vtk", 0);
+
+
+	// kana type:
+	// hiragana => hiragana
+	// katakana => katakana
+	if ($.cookie("kana_type") == null)
+		$.cookie("kana_type", "hiragana");
+
+
+	// kana set:
+	// monographs => monographs
+	// digraphs => digraphs
+	// monographs_with_diacritics => monographs with diacritics
+	// digraphs_with_diacritics => digraphs with diacritics
+	if ($.cookie("kana_set") == null)
+		$.cookie("kana_set", "monographs");
 });
 
