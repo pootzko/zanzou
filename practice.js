@@ -693,6 +693,9 @@ function checkFlashcardAmount() {
 
 		// save changes to storage_symbols_obj
 		localStorage.setItem("storage_symbols_obj", JSON.stringify(storage_symbols));
+
+		// reinitialize
+		setFlashcard();
 	}
 }
 
