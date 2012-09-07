@@ -19,7 +19,7 @@ $(document).ready(function() {
 // initialize soundmanager2
 function initializeSound() {
 	soundManager.setup({
-		url: "javascript_libs/soundmanager2/",
+		url: "lib/soundmanager2/",
 		flashVersion: 9,
 		useFlashBlock: false
 	});
