@@ -15,6 +15,7 @@ CHANGELOG HISTORY:
 
 v1.0.3
 minor grammar and description corrections
+added class to options "n" symbol and typo correction
 
 v1.0.2
 moved javascript_libs/ to lib/

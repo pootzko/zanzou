@@ -146,7 +146,7 @@ function generateTable(kana_type, kana_set) {
 		special = "" +
 			"<tr class='table_symbol'>" +
 			"	<td class='table_prefix'></td>" +
-			"	<td></td><td></td><td>" +
+			"	<td></td><td></td><td class='options_td'>" +
 			"		<input type='checkbox'" +
 			"			name='" + kana_set + "'" +
 			"			value='" + checkbox_id_prefix + "10_0'" +
