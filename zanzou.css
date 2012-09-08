@@ -319,11 +319,33 @@ div#flashcard_info {
 	font-size: 0.95em;
 }
 
-div#footer {
+div#social {
 	clear: both;
 	width: auto;
+	height: auto;
+	margin: 10px 0 0 10px;
+}
+
+/* --- fb top marign fix --- */
+div .fb-like, .fb_edge_widget_with_comment, .fb_iframe_widget {
+	width: 106px;
+}
+
+div #fb_button, #tw_button, #gp_button {
+    font-size: 3px;
+    display: inline-block;
+}
+
+div .fb_reset {
+    display: inline;
+}
+
+/* ------------------------- */
+
+div#footer {
+	width: auto;
 	height: 19px;
-	margin: 15px 0 0 10px;
+	margin: 7px 0 0 10px;
 	font-size: 0.8em;
 }
 

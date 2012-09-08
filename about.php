@@ -25,7 +25,7 @@ require 'navigation.php';
 		<li>and to all my friends who helped me test Zanzou and provided me with feedback</li>
 	</ul><br />
 
-	<p>For any feedback or bug reports, please contact me through the email provided at the bottom of the page.</p>
+	<p>For any feedback or bug reports, please contact me through the email or leave a <a href="http://cmikavac.net/2012/09/08/zanzou/#respond">comment</a>.</p>
 </div> <!-- /CONTENT -->
 
 

@@ -40,6 +40,7 @@ require 'navigation.php';
 		</ul>
 		<li>customize your kana practice set</li>
 		<li>flashcard frequency based on correct answers</li>
+		<li>free</li>
 	</ul>
 
 	<br />
