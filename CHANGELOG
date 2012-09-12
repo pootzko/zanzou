@@ -3,7 +3,6 @@ TO-DO:
 group similar sounding symbol answers
 strokes of 20 flashcards, score, and success word
 typing answer input type
-count wrong answer towards incorrect for that symbol as well
 personal statistics
 prioritize by total amount
 block old browsers
@@ -16,6 +15,7 @@ CHANGELOG HISTORY:
 v1.0.4
 another not enough symbols selected bugfix
 added social buttons
+count each wrong as total+1 for that symbol
 
 v1.0.3
 minor grammar and description corrections

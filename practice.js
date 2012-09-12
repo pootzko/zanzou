@@ -180,12 +180,12 @@ function initializeAnswers() {
 	while (i < $.cookie("difficulty")) {
 		skip_flag = 0;
 
-		// select similar kana for answers to increse difficulty
+		// select similar kana for answers to increase difficulty
 		if (($.cookie("difficulty") > 4) && (similar_check == 0)) {
 			var similar_row = -1;
 			similar_check = 1;
 
-			// set the frequency (difficulty increse)
+			// set the frequency (difficulty increase)
 			if ($.cookie("difficulty") == 8)
 				var frequency = 0.25;
 			else
@@ -226,7 +226,7 @@ function initializeAnswers() {
 			var tmp_row, tmp_kana_set, tmp_kana_type;
 			row_check = 1;
 
-			// set the frequency (difficulty increse)
+			// set the frequency (difficulty increase)
 			if ($.cookie("difficulty") == 8)
 				var frequency = 0.4;
 			else ($.cookie("difficulty") == 12)
@@ -361,8 +361,32 @@ function initializeAnswers() {
 
 			if (answers[tmp_index] == tmp_answer)
 				var answer_id = "correct_answer";
-			else
-				var answer_id = "answer_box_" + tmp_index;
+			else {
+				// get id's for wrong answers
+				for (var k=0; k<storage_symbols.symbols.length; k++) {
+					// for roumaji and voice flashcards
+					if (answers[tmp_index] == storage_symbols.symbols[k].ro) {
+						var answer_id = "" +
+							"" + checked_storage_symbols.symbols[correct_answer_index].kt + "_" +
+							"" + storage_symbols.symbols[k].ks + "_" +
+							"" + storage_symbols.symbols[k].kr + "_" +
+							"" + storage_symbols.symbols[k].kc;
+
+						break;
+					}
+					// for kana flashcards
+					else if (answers[tmp_index] == storage_symbols.symbols[k].sy) {
+						var answer_id = "" +
+							"" + storage_symbols.symbols[k].kt + "_" +
+							"" + storage_symbols.symbols[k].ks + "_" +
+							"" + storage_symbols.symbols[k].kr + "_" +
+							"" + storage_symbols.symbols[k].kc;
+
+						break;
+					}
+				}
+				console.log(answer_id);
+			}
 
 			answer_boxes += "" +
 				"<td id='" + answer_id + "' onclick='onAnswerBoxClick(\"" + answer_id + "\");'>" +
@@ -389,7 +413,7 @@ function initializeAnswers() {
 
 // actions to execute on answering
 function onAnswerBoxClick(answer_id) {
-	// on answering correctly change box color and increse count
+	// on answering correctly change box color and increase count
 	if (answer_id == "correct_answer") {
 		$("#" + answer_id).css('background-color', "#207947");
 
@@ -428,11 +452,13 @@ function onAnswerBoxClick(answer_id) {
 		else
 			temp_correct_state = 2;
 	}
-	// on answering incorrectly change box color and increse total count
+	// on answering incorrectly change box color and increase total count
 	else {
 		$("#" + answer_id).css('background-color', "#c32918");
 
-		// increse total count only if answered wrongly on first try
+		var table_column = DBtableColumnName();
+
+		// increase total count (for flashcard symbol) only if answered wrongly on first try
 		if (temp_correct_state == 1) {
 			for (var i=0; i<storage_symbols.symbols.length; i++) {
 				if (storage_symbols.symbols[i].sy == checked_storage_symbols.symbols[correct_answer_index].sy) {
@@ -444,7 +470,6 @@ function onAnswerBoxClick(answer_id) {
 						storage_symbols.symbols[i].tv++;
 
 					var symbol_key = symbolKey(i);
-					var table_column = DBtableColumnName();
 
 					incrementDBScoreValue(symbol_key, table_column + "t");
 
@@ -453,6 +478,40 @@ function onAnswerBoxClick(answer_id) {
 			}
 
 			storage_score.total++;
+		}
+
+		// increase total count for the wrong answered symbol
+		var table_column_split = table_column.split("_");
+
+		// if flashcard is kana type, increase roumaji total
+		if (table_column_split[1] == "ktr")
+			table_column = table_column.replace("ktr", "rtk");
+		// if flashcard is roumaji or voice type, increase kana total
+		else {
+			table_column = table_column.replace("rtk", "ktr");
+			table_column = table_column.replace("vtk", "ktr");
+		}
+
+		incrementDBScoreValue(answer_id, table_column + "t");
+
+		// increase total count (localstorage)
+		var answer_id_split = answer_id.split("_");
+		for (var i=0; i<storage_symbols.symbols.length; i++) {
+			if (storage_symbols.symbols[i].kt == answer_id_split[0]) {
+				if (storage_symbols.symbols[i].ks == answer_id_split[1]) {
+					if (storage_symbols.symbols[i].kr == answer_id_split[2]) {
+						if (storage_symbols.symbols[i].kc == answer_id_split[3]) {
+							if (flashcard_type == 1)
+								storage_symbols.symbols[i].tk++;
+							else if (flashcard_type == 2)
+								storage_symbols.symbols[i].tr++;
+							else if (flashcard_type == 3)
+								storage_symbols.symbols[i].tv++;
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		temp_correct_state = 0;

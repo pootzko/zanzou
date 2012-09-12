@@ -31,6 +31,7 @@ require 'navigation.php';
 		<ul>
 			<li>success rate is calculated based on all the flashcards you answered so far (correct/total answers ratio)</li>
 			<li>answer counts as being correct only if you chose the correct answer first</li>
+			<li>each wrong answer counts towards incorrect for that symbol</li>
 			<li>answering incorrectly will not move you to the next flashcard immediately - to better learn kana, you are required to figure out the correct answer first</li>
 			<li>statistics on the right side of the flashcard are calculated based on your current symbol correct/total ratio</li>
 		</ul>

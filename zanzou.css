@@ -328,7 +328,7 @@ div#social {
 
 /* --- fb top marign fix --- */
 div .fb-like, .fb_edge_widget_with_comment, .fb_iframe_widget {
-	width: 106px;
+	width: 104px;
 }
 
 div #fb_button, #tw_button, #gp_button {
@@ -339,7 +339,6 @@ div #fb_button, #tw_button, #gp_button {
 div .fb_reset {
     display: inline;
 }
-
 /* ------------------------- */
 
 div#footer {
