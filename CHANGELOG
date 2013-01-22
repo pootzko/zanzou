@@ -12,10 +12,15 @@ add social buttons
 CHANGELOG HISTORY:
 ------------------------------
 
+v1.0.6
+minor bugfixes
+
+v1.0.5
+count each wrong as total+1 for that symbol
+
 v1.0.4
 another not enough symbols selected bugfix
 added social buttons
-count each wrong as total+1 for that symbol
 
 v1.0.3
 minor grammar and description corrections

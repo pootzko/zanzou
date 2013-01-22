@@ -2,7 +2,7 @@
 
 <script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="lib/jquery.cookie.js"></script>
-<script type="text/javascript" src="cookie.js"></script>
+<script type="text/javascript" src="js/cookie.js"></script>
 
 <?php
 require 'header.php';

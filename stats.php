@@ -3,10 +3,10 @@
 <script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="lib/jquery.cookie.js"></script>
 <script type="text/javascript" src="lib/tooltip.js"></script>
-<script type="text/javascript" src="localstorage.js"></script>
-<script type="text/javascript" src="database.js"></script>
-<script type="text/javascript" src="kana.js"></script>
-<script type="text/javascript" src="stats.js"></script>
+<script type="text/javascript" src="js/localstorage.js"></script>
+<script type="text/javascript" src="js/database.js"></script>
+<script type="text/javascript" src="js/kana.js"></script>
+<script type="text/javascript" src="js/stats.js"></script>
 
 <?php
 require 'header.php';

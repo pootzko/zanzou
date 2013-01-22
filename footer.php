@@ -5,7 +5,7 @@
 
 			<div id="tw_button">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://zanzou.cmikavac.net/" data-text="Check this adaptable #japanese #kana flashcard learning website out" data-via="pootzko" data-hashtags="zanzou">Tweet</a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			</div>
 
 			<div id="gp_button">

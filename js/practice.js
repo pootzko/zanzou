@@ -385,7 +385,6 @@ function initializeAnswers() {
 						break;
 					}
 				}
-				console.log(answer_id);
 			}
 
 			answer_boxes += "" +
@@ -476,8 +475,6 @@ function onAnswerBoxClick(answer_id) {
 					break;
 				}
 			}
-
-			storage_score.total++;
 		}
 
 		// increase total count for the wrong answered symbol
@@ -514,6 +511,7 @@ function onAnswerBoxClick(answer_id) {
 			}
 		}
 
+		storage_score.total++;
 		temp_correct_state = 0;
 	}
 

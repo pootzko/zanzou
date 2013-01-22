@@ -327,16 +327,20 @@ div#social {
 }
 
 /* --- fb top marign fix --- */
-div .fb-like, .fb_edge_widget_with_comment, .fb_iframe_widget {
+.fb-like, .fb_edge_widget_with_comment, .fb_iframe_widget {
 	width: 104px;
 }
 
-div #fb_button, #tw_button, #gp_button {
+#fb_button, #tw_button, #gp_button {
     font-size: 3px;
     display: inline-block;
 }
 
-div .fb_reset {
+.fb_reset {
+    display: inline;
+}
+
+.fb_reset {
     display: inline;
 }
 /* ------------------------- */
