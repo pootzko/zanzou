@@ -32,7 +32,7 @@ function initializeSound() {
 // prepare flashcard
 function setFlashcard() {
 	var tmp_low_range = 0, tmp_high_range = 0, tmp_range_value = 0;
-	var flawless_coefficient = 1, check_latest = 1, latest_flag, latest_amount;
+	var check_latest = 1, latest_flag, latest_amount;
 	checked_storage_symbols = {"symbols": []};
 
 
@@ -55,7 +55,7 @@ function setFlashcard() {
 		if (success_rate_percentage == 0)
 			tmp_high_range += checked_storage_symbols.symbols.length;
 		else if (success_rate_percentage == 1)
-			tmp_high_range += flawless_coefficient;
+			tmp_high_range += 1;
 		else
 			tmp_high_range += (checked_storage_symbols.symbols.length * (-1 * Math.log(success_rate_percentage)));
 
