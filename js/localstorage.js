@@ -18,8 +18,8 @@ function initializeLocalStorage() {
 	* 	total_roumaji: value,
 	* 	correct_voice: value,
 	* 	total_voice: value,
-	* 	range_low: value,
-	* 	range_high: value
+	* 	low_range: value,
+	* 	high_range: value
 	* ]}
 	*
 	*

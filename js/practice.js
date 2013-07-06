@@ -32,7 +32,7 @@ function initializeSound() {
 // prepare flashcard
 function setFlashcard() {
 	var tmp_low_range = 0, tmp_high_range = 0, tmp_range_value = 0;
-	var check_latest = 1, latest_flag, latest_amount;
+	var flawless_coefficient = 1, check_latest = 1, latest_flag, latest_amount;
 	checked_storage_symbols = {"symbols": []};
 
 
@@ -42,7 +42,7 @@ function setFlashcard() {
 			checked_storage_symbols.symbols.push(storage_symbols.symbols[i]);
 
 
-	// check if at least one symbol is selected, if not - initialize firs five hiragana symbols
+	// check if at least one symbol is selected, if not - initialize first five hiragana symbols
 	checkFlashcardAmount();
 
 
@@ -55,9 +55,9 @@ function setFlashcard() {
 		if (success_rate_percentage == 0)
 			tmp_high_range += checked_storage_symbols.symbols.length;
 		else if (success_rate_percentage == 1)
-			tmp_high_range += 1;
+			tmp_high_range += flawless_coefficient;
 		else
-			tmp_high_range += (checked_storage_symbols.symbols.length * (-1 * Math.log(success_rate_percentage)));
+			tmp_high_range += (checked_storage_symbols.symbols.length * (-1 * Math.log(success_rate_percentage) + 1));
 
 		checked_storage_symbols.symbols[i].lr = Math.floor(tmp_low_range * 100) / 100;
 		checked_storage_symbols.symbols[i].hr = Math.floor(tmp_high_range * 100) / 100;
@@ -223,7 +223,7 @@ function initializeAnswers() {
 
 		// add symbols from the same row to the answers pool
 		if (row_check == 0) {
-			var tmp_row, tmp_kana_set, tmp_kana_type;
+			var tmp_row, tmp_set, tmp_type;
 			row_check = 1;
 
 			// set the frequency (difficulty increase)
@@ -286,7 +286,7 @@ function initializeAnswers() {
 		}
 
 
-		// prepare incorrect answers if answers[i] is not the correct answer
+		// prepare incorrect answers if answers[i] is not an acceptable/valid answer
 		if (checked_symbols_counter < (different_sounds_count-1)) {
 			current_symbol_index = Math.floor(Math.random() * checked_symbols_length);
 
@@ -742,7 +742,7 @@ function DBtableColumnName() {
 
 
 
-// check if at least one symbol is selected, if not - initialize firs five hiragana symbols
+// check if at least one symbol is selected, if not - initialize first five hiragana symbols
 function checkFlashcardAmount() {
 	if (checked_storage_symbols.symbols.length == 0) {
 		for (var i=0; i<5; i++)
